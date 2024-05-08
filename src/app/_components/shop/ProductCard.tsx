@@ -1,9 +1,6 @@
-'use client'
-
 import Image from 'next/image'
-import { Fragment } from 'react'
 
-const ProductCard = (product: any) => {
+export default function ProductCard(product: any) {
   return (
     <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
       <div className="group relative">
@@ -30,26 +27,5 @@ const ProductCard = (product: any) => {
         </div>
       </div>
     </div>
-  )
-}
-
-export default function Home() {
-  const products = [{ id: 1273391749, name: 'Black Tee', price: '$35' }]
-  return (
-    <main>
-      <div className="bg-white">
-        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-            Customers also purchased
-          </h2>
-
-          {products.map((product) => (
-            <Fragment key={product.id}>
-              <ProductCard product={product} />
-            </Fragment>
-          ))}
-        </div>
-      </div>
-    </main>
   )
 }

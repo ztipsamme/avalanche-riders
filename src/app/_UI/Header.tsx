@@ -29,6 +29,7 @@ import {
 } from '@heroicons/react/20/solid'
 import Link from 'next/link'
 import Image from 'next/image'
+import { classNames } from '../_helpers/classNames'
 
 const products = [
   {
@@ -67,10 +68,6 @@ const callsToAction = [
   { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
   { name: 'Contact sales', href: '#', icon: PhoneIcon },
 ]
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ')
-}
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
