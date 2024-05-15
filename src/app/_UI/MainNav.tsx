@@ -28,7 +28,7 @@ import {
   PlayCircleIcon,
 } from '@heroicons/react/20/solid'
 import Link from 'next/link'
-import { classNames } from '../_helpers/classNames'
+import { classNames } from '../_hooks/classNames'
 import {
   NavLinkDropDownWithDescription,
   NavLink,

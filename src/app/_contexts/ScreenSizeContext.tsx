@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
 import { Children } from '../_types/types'
-import { screenSizeDefault, useScreenSize } from '../_helpers/useScreenSize'
+import { screenSizeDefault, useScreenSize } from '../_hooks/useScreenSize'
 
 export type ScreenSize = {
   isMobile: boolean
