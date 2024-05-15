@@ -1,14 +1,8 @@
-'use client'
-
-import { Fragment, useContext } from 'react'
+import { Fragment } from 'react'
 import ProductCard from './ProductCard'
-// import { ProductsContext } from '@/app/_contexts/ProductsContext'
 
 export default function ProductDisplay() {
-  const products = [{ id: 1273391749, name: 'Black Tee', price: '$35' }]
-  // const { getProducts } = useContext(ProductsContext)
-
-  // console.log(getProducts())
+  const productsMock = [{ id: 1273391749, name: 'Black Tee', price: '$35' }]
 
   return (
     <div className="bg-white">
@@ -17,7 +11,7 @@ export default function ProductDisplay() {
           Customers also purchaseds
         </h2>
 
-        {products.map((product) => (
+        {productsMock.map((product: any) => (
           <Fragment key={product.id}>
             <ProductCard product={product} />
           </Fragment>
