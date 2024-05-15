@@ -1,4 +1,11 @@
-'use client'
+export type Props = {
+  params: { id: string }
+}
+export const generateMetadata = ({ params }: Props) => {
+  return {
+    title: `Product ${params.id}`,
+  }
+}
 
 const product = {
   name: 'Basic Tee 6-Pack',
@@ -53,7 +60,8 @@ const product = {
     'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
 }
 
-export default function Page() {
+export default function Page({ params }: Props) {
+  console.log(params)
   return (
     <div className="bg-white">
       <div className="pt-6">
