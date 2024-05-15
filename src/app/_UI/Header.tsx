@@ -28,10 +28,30 @@ import {
   PlayCircleIcon,
 } from '@heroicons/react/20/solid'
 import Link from 'next/link'
-import Image from 'next/image'
 import { classNames } from '../_helpers/classNames'
+import { NavLink } from '../_components/Links'
 
-const products = [
+type IconType = React.ForwardRefExoticComponent<
+  Omit<React.SVGProps<SVGSVGElement>, 'ref'> & {
+    title?: string
+    titleId?: string
+  } & React.RefAttributes<SVGSVGElement>
+>
+
+type Product = {
+  name: string
+  description: string
+  href: string
+  icon: IconType
+}
+
+type CallToAction = {
+  name: string
+  href: string
+  icon: IconType
+}
+
+const products: Product[] = [
   {
     name: 'Analytics',
     description: 'Get a better understanding of your traffic',
@@ -64,12 +84,58 @@ const products = [
   },
 ]
 
-const callsToAction = [
+const callsToAction: CallToAction[] = [
   { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
   { name: 'Contact sales', href: '#', icon: PhoneIcon },
 ]
 
-export default function Home() {
+type DropDownItem<T> = {
+  item: T
+}
+
+const DropDownLinkWithDescription = ({ item }: DropDownItem<Product>) => (
+  <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
+    <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+      <item.icon
+        className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
+        aria-hidden="true"
+      />
+    </div>
+    <div className="flex-auto">
+      <Link href={item.href} className="block font-semibold text-gray-900">
+        {item.name}
+        <span className="absolute inset-0" />
+      </Link>
+      <p className="mt-1 text-gray-600">{item.description}</p>
+    </div>
+  </div>
+)
+
+const CallToActionItem = ({ item }: DropDownItem<CallToAction>) => (
+  <Link
+    href={item.href}
+    className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
+  >
+    <item.icon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+    {item.name}
+  </Link>
+)
+
+type NavLinksProps = {
+  links: string[]
+}
+
+const NavLinks = ({ links }: NavLinksProps) => (
+  <>
+    {links.map((linkName, index) => (
+      <Fragment key={index}>
+        <NavLink href="#">{linkName}</NavLink>
+      </Fragment>
+    ))}
+  </>
+)
+
+const Home = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
@@ -120,83 +186,36 @@ export default function Home() {
               <PopoverPanel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
                 <div className="p-4">
                   {products.map((item) => (
-                    <div
-                      key={item.name}
-                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
-                    >
-                      <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                        <item.icon
-                          className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
-                          aria-hidden="true"
-                        />
-                      </div>
-                      <div className="flex-auto">
-                        <a
-                          href={item.href}
-                          className="block font-semibold text-gray-900"
-                        >
-                          {item.name}
-                          <span className="absolute inset-0" />
-                        </a>
-                        <p className="mt-1 text-gray-600">{item.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                  {callsToAction.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
-                    >
-                      <item.icon
-                        className="h-5 w-5 flex-none text-gray-400"
-                        aria-hidden="true"
-                      />
-                      {item.name}
-                    </a>
+                    <DropDownLinkWithDescription key={item.name} item={item} />
                   ))}
                 </div>
               </PopoverPanel>
             </Transition>
           </Popover>
 
-          {['Features', 'Marketplace', 'Company'].map((linkName, index) => (
-            <Link
-              key={index}
-              href="#"
-              className="text-sm font-semibold leading-6 text-gray-900"
-            >
-              {linkName}
-            </Link>
-          ))}
+          <NavLinks links={['Features', 'Marketplace', 'Company']} />
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link
-            href="#"
-            className="text-sm font-semibold leading-6 text-gray-900"
-          >
+          <NavLink href="#">
             Log in <span aria-hidden="true">&rarr;</span>
-          </Link>
+          </NavLink>
         </div>
       </nav>
+      {/* mobile */}
       <Dialog
         className="lg:hidden"
         open={mobileMenuOpen}
-        onClose={setMobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
       >
         <div className="fixed inset-0 z-10" />
         <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <Link href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <Image
+              <img
                 className="h-8 w-auto"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                 alt=""
-                width="100"
-                height="100"
               />
             </Link>
             <button
@@ -239,25 +258,10 @@ export default function Home() {
                     </>
                   )}
                 </Disclosure>
-                {['Features', 'Marketplace', 'Company'].map(
-                  (linkName, index) => (
-                    <Link
-                      key={index}
-                      href="#"
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    >
-                      {linkName}
-                    </Link>
-                  )
-                )}
+                <NavLinks links={['Features', 'Marketplace', 'Company']} />
               </div>
               <div className="py-6">
-                <Link
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </Link>
+                <NavLink href="#">Log in</NavLink>
               </div>
             </div>
           </div>
@@ -266,3 +270,5 @@ export default function Home() {
     </header>
   )
 }
+
+export default Home

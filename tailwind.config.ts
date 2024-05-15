@@ -2,7 +2,7 @@ import type { Config } from 'tailwindcss'
 
 const defaultTheme = require('tailwindcss/defaultTheme')
 
-const config: Config = {
+const tailwindconfig: Config = {
   mode: 'jit',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -27,4 +27,4 @@ const config: Config = {
     require('@tailwindcss/typography'),
   ],
 }
-export default config
+export default tailwindconfig
