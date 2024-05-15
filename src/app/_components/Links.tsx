@@ -11,9 +11,9 @@ type NavLink = {
 }
 
 export const NavLink = ({ href, children }: NavLink) => {
-  const { isLg } = useScreenSize()
+  const { isDesktop } = useScreenSize()
 
-  if (isLg) {
+  if (isDesktop) {
     return (
       <Link
         href={href}

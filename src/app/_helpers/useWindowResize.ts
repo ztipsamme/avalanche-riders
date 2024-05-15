@@ -2,20 +2,20 @@ import { useEffect, useState } from 'react'
 import tailwindconfig from '../../../tailwind.config'
 import resolveConfig from 'tailwindcss/resolveConfig'
 
+type Breakpoint = {
+  [key in 'name' | 'size']: string
+}
+
 export type TailwindBreakpoints = {
   [key: string]: string
 }
 
-export type Breakpoint = {
-  [key in 'name' | 'size']: string
-}
-
 export const useWindowResize = () => {
   const [currentBreakpoint, setCurrentBreakpoint] = useState('')
+  const tailwindBreakpoints: TailwindBreakpoints =
+    resolveConfig(tailwindconfig).theme.screens
 
   useEffect(() => {
-    const tailwindBreakpoints: TailwindBreakpoints =
-      resolveConfig(tailwindconfig).theme.screens
     let breakpoints: Breakpoint[] = []
 
     for (var key in tailwindBreakpoints) {
@@ -44,5 +44,19 @@ export const useWindowResize = () => {
     }
   }, [])
 
-  return currentBreakpoint
+  const getCurrentBreakpoint = (): string => {
+    const tailwindBreakpoints: TailwindBreakpoints =
+      resolveConfig(tailwindconfig).theme.screens
+    let newBreakpoint = ''
+
+    for (const [key, value] of Object.entries(tailwindBreakpoints)) {
+      if (window.innerWidth >= parseFloat(value.slice(0, -2))) {
+        newBreakpoint = key
+      }
+    }
+
+    return newBreakpoint
+  }
+
+  return { currentBreakpoint, getCurrentBreakpoint }
 }

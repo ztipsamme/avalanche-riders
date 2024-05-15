@@ -1,28 +1,27 @@
 import { useWindowResize } from './useWindowResize'
 
 export type ScreenSize = {
-  [key in 'isSm' | 'isMd' | 'isLg' | 'isXl' | 'is2xl']: boolean
+  isMobile: boolean
+  isTablet: boolean
+  isDesktop: boolean
 }
 
 export const useScreenSize = (): ScreenSize => {
-  const currentBreakpoint = useWindowResize()
+  const { currentBreakpoint } = useWindowResize()
+  const _default = {
+    isMobile: true,
+    isTablet: false,
+    isDesktop: false,
+  }
+  const largerThanLg = { isMobile: false, isTablet: false, isDesktop: true }
 
-  const breakpointSizes = {
-    isSm: 'sm',
-    isMd: 'md',
-    isLg: 'lg',
-    isXl: 'xl',
-    is2xl: '2xl',
+  const screenSizeMap: Record<string, ScreenSize> = {
+    sm: _default,
+    md: { isMobile: false, isTablet: true, isDesktop: false },
+    lg: largerThanLg,
+    xl: largerThanLg,
+    '2xl': largerThanLg,
   }
 
-  const screenSize: ScreenSize = Object.keys(breakpointSizes).reduce(
-    (acc, key) => {
-      const screenSizeKey = key as keyof ScreenSize
-      acc[screenSizeKey] = currentBreakpoint === breakpointSizes[screenSizeKey]
-      return acc
-    },
-    {} as ScreenSize
-  )
-
-  return { ...screenSize }
+  return screenSizeMap[currentBreakpoint] || _default
 }
