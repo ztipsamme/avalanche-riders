@@ -1,77 +1,70 @@
 'use client'
 
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import {
   Dialog,
   DialogPanel,
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
-  Popover,
-  PopoverButton,
   PopoverGroup,
-  PopoverPanel,
-  Transition,
 } from '@headlessui/react'
 import {
-  ArrowPathIcon,
   Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
   XMarkIcon,
-} from '@heroicons/react/24/outline'
-import {
   ChevronDownIcon,
-  PhoneIcon,
-  PlayCircleIcon,
-} from '@heroicons/react/20/solid'
+  ShoppingCartIcon,
+  UserCircleIcon,
+  HeartIcon,
+  MagnifyingGlassIcon,
+} from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { classNames } from '../_hooks/classNames'
-import {
-  NavLinkDropDownWithDescription,
-  NavLink,
-  NavLinks,
-} from '../_components/Links'
-import {
-  ScreenSizeContext,
-  ScreenSizeProvider,
-} from '../_contexts/ScreenSizeContext'
-import { DropDownItem, Product } from '../_types/types'
+import { NavLink, NavLinks } from '../_components/Links'
+import Image from 'next/image'
 
-const mockProducts: Product[] = [
+const iconStyle = 'h-5 w-5 flex-none'
+
+const iconButtons = [
   {
-    name: 'Analytics',
-    description: 'Get a better understanding of your traffic',
+    label: 'Sök',
     href: '#',
-    icon: ChartPieIcon,
+    icon: <MagnifyingGlassIcon className={iconStyle} aria-hidden="true" />,
   },
   {
-    name: 'Engagement',
-    description: 'Speak directly to your customers',
+    label: 'Favoriter',
     href: '#',
-    icon: CursorArrowRaysIcon,
+    icon: <HeartIcon className={iconStyle} aria-hidden="true" />,
   },
   {
-    name: 'Security',
-    description: 'Your customers’ data will be safe and secure',
+    label: 'Varukorg',
     href: '#',
-    icon: FingerPrintIcon,
+    icon: <ShoppingCartIcon className={iconStyle} aria-hidden="true" />,
   },
   {
-    name: 'Integrations',
-    description: 'Connect with third-party tools',
+    label: 'Logga in',
     href: '#',
-    icon: SquaresPlusIcon,
-  },
-  {
-    name: 'Automations',
-    description: 'Build strategic funnels that will convert',
-    href: '#',
-    icon: ArrowPathIcon,
+    icon: <UserCircleIcon className={iconStyle} aria-hidden="true" />,
   },
 ]
+
+const Logo = () => {
+  return (
+    <Link href="#" className="-m-1.5 p-1.5">
+      <span className="sr-only">Your Company</span>
+      <Image
+        src="/logo.svg"
+        alt="Vercel Logo"
+        className="dark:invert"
+        width={30}
+        height={30}
+        priority
+      />
+    </Link>
+  )
+}
+
+const links = ['Kollektion', 'FAQ', 'Kontakta oss']
 
 export const MainNav = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -79,18 +72,14 @@ export const MainNav = () => {
   return (
     <>
       <nav
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        className="mx-auto flex max-w-8xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
       >
-        <div className="flex lg:flex-1">
-          <Link href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <img
-              className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt=""
-            />
-          </Link>
+        <PopoverGroup className="hidden lg:flex lg:flex-1 lg:gap-x-12">
+          <NavLinks links={links} />
+        </PopoverGroup>
+        <div className="flex">
+          <Logo />
         </div>
         <div className="flex lg:hidden">
           <button
@@ -102,47 +91,16 @@ export const MainNav = () => {
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-          <Popover className="relative">
-            <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
-              Product
-              <ChevronDownIcon
-                className="h-5 w-5 flex-none text-gray-400"
-                aria-hidden="true"
-              />
-            </PopoverButton>
-
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-200"
-              enterFrom="opacity-0 translate-y-1"
-              enterTo="opacity-100 translate-y-0"
-              leave="transition ease-in duration-150"
-              leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 translate-y-1"
-            >
-              <PopoverPanel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
-                <div className="p-4">
-                  {mockProducts.map((item) => (
-                    <NavLinkDropDownWithDescription
-                      key={item.name}
-                      item={item}
-                    />
-                  ))}
-                </div>
-              </PopoverPanel>
-            </Transition>
-          </Popover>
-
-          <NavLinks links={['Features', 'Marketplace', 'Company']} />
-        </PopoverGroup>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <NavLink href="#">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </NavLink>
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-3">
+          {iconButtons.map((link, index) => (
+            <NavLink key={index} href={link.href} ariaLabel={link.label} icon>
+              {link.icon}
+            </NavLink>
+          ))}
         </div>
       </nav>
       {/* mobile */}
+
       <Dialog
         className="lg:hidden"
         open={mobileMenuOpen}
@@ -151,14 +109,7 @@ export const MainNav = () => {
         <div className="fixed inset-0 z-10" />
         <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <Link href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
-              />
-            </Link>
+            <Logo />
             <button
               type="button"
               className="-m-2.5 rounded-md p-2.5 text-gray-700"
@@ -171,38 +122,22 @@ export const MainNav = () => {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                <Disclosure as="div" className="-mx-3">
-                  {({ open }) => (
-                    <>
-                      <DisclosureButton className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                        Product
-                        <ChevronDownIcon
-                          className={classNames(
-                            open ? 'rotate-180' : '',
-                            'h-5 w-5 flex-none'
-                          )}
-                          aria-hidden="true"
-                        />
-                      </DisclosureButton>
-                      <DisclosurePanel className="mt-2 space-y-2">
-                        {[...mockProducts].map((item) => (
-                          <DisclosureButton
-                            key={item.name}
-                            as="a"
-                            href={item.href}
-                            className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                          >
-                            {item.name}
-                          </DisclosureButton>
-                        ))}
-                      </DisclosurePanel>
-                    </>
-                  )}
-                </Disclosure>
-                <NavLinks links={['Features', 'Marketplace', 'Company']} />
+                <NavLinks links={links} />
               </div>
               <div className="py-6">
-                <NavLink href="#">Log in</NavLink>
+                {iconButtons.map((link, index) => (
+                  <NavLink
+                    key={index}
+                    href={link.href}
+                    ariaLabel={link.label}
+                    icon
+                  >
+                    <div className="nav-link-with-icon">
+                      {link.icon}
+                      {link.label}
+                    </div>
+                  </NavLink>
+                ))}
               </div>
             </div>
           </div>

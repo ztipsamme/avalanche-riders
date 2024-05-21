@@ -1,19 +1,16 @@
 import Link from 'next/link'
 import { Fragment, useContext } from 'react'
-import { Children, DropDownItem, Product } from '../_types/types'
+import { DropDownItem, TNavLink, Product } from '../_types/types'
 import { ScreenSizeContext, useDevice } from '../_contexts/ScreenSizeContext'
 
-type NavLink = {
-  href: string
-} & Children
-
-export const NavLink = ({ href, children }: NavLink) => {
+export const NavLink = ({ href, icon, ariaLabel, children }: TNavLink) => {
   const { isDesktop } = useContext(ScreenSizeContext)
   if (isDesktop) {
     return (
       <Link
         href={href}
-        className="text-sm font-semibold leading-6 text-gray-900"
+        className={`.nav-link ${icon && '.nav-link-with-icon'}`}
+        aria-label={ariaLabel}
       >
         {children}
       </Link>

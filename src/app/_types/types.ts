@@ -16,6 +16,12 @@ export type Product = {
   icon: IconType
 }
 
+export type TNavLink = {
+  href: string
+  icon?: boolean
+  ariaLabel?: string
+} & Children
+
 export type DropDownItem<T> = {
   item: T
 }
