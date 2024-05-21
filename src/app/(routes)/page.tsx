@@ -1,8 +1,7 @@
-import HeroSection from '../_components/HeroSection'
 import ProductDisplay from '../_components/shop/ProductDisplay'
 import Hero from '../sections/Hero'
 
-export default function Page() {
+export default async function Page() {
   return (
     <main>
       <Hero />

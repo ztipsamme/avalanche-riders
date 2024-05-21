@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { TNavLink } from '../_types/types'
-import { Description } from '@headlessui/react'
+import { TNavLink } from '../../utils/types'
 
 const PrimaryButton = ({ href, children }: TNavLink) => {
   return (

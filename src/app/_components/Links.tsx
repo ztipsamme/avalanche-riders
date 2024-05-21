@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Fragment, useContext } from 'react'
-import { DropDownItem, TNavLink, Product } from '../_types/types'
+import { DropDownItem, TNavLink, DropdownProduct } from '../../utils/types'
 import { ScreenSizeContext, useDevice } from '../_contexts/ScreenSizeContext'
 
 export const NavLink = ({ href, icon, ariaLabel, children }: TNavLink) => {
@@ -38,7 +38,7 @@ export const NavLinks = ({ links }: { links: string[] }) => (
 
 export const NavLinkDropDownWithDescription = ({
   item,
-}: DropDownItem<Product>) => (
+}: DropDownItem<DropdownProduct>) => (
   <div className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
     <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
       <item.icon

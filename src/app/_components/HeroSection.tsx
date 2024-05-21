@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import MainNav from '../_UI/MainNav'
-import { TNavLink } from '../_types/types'
+import { TNavLink } from '../../utils/types'
 
 const PrimaryButton = ({ href, children }: TNavLink) => {
   return (

@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import { Children } from '../_types/types'
+import { Children } from '../../utils/types'
 import { screenSizeDefault, useScreenSize } from '../_hooks/useScreenSize'
 
 export type ScreenSize = {
