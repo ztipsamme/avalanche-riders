@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Fragment, useContext } from 'react'
 import { DropDownItem, TNavLink, DropdownProduct } from '../../utils/types'
-import { ScreenSizeContext, useDevice } from '../_contexts/ScreenSizeContext'
+import { ScreenSizeContext } from '../../utils/contexts/ScreenSizeContext'
 
 export const NavLink = ({ href, icon, ariaLabel, children }: TNavLink) => {
   const { isDesktop } = useContext(ScreenSizeContext)
@@ -26,11 +26,17 @@ export const NavLink = ({ href, icon, ariaLabel, children }: TNavLink) => {
   )
 }
 
-export const NavLinks = ({ links }: { links: string[] }) => (
+export const NavLinks = ({ links }: { links: TNavLink[] }) => (
   <>
-    {links.map((linkName, index) => (
+    {links.map((link, index) => (
       <Fragment key={index}>
-        <NavLink href="#">{linkName}</NavLink>
+        <NavLink
+          href={link.href}
+          ariaLabel={'ariaLabel' in link ? link.ariaLabel : undefined}
+          icon={'icon' in link ? link.icon : undefined}
+        >
+          {'label' in link ? link.label : link.children}
+        </NavLink>
       </Fragment>
     ))}
   </>

@@ -16,11 +16,12 @@ export type DropdownProduct = {
   icon: IconType
 }
 
-export type TNavLink = {
+export type TNavLink = Partial<Children> & {
+  label?: string
   href: string
-  icon?: boolean
+  icon?: ReactNode
   ariaLabel?: string
-} & Children
+}
 
 export type DropDownItem<T> = {
   item: T

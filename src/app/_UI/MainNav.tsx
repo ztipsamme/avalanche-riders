@@ -1,25 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import {
-  Dialog,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  PopoverGroup,
-} from '@headlessui/react'
+import { Dialog, DialogPanel, PopoverGroup } from '@headlessui/react'
 import {
   Bars3Icon,
   XMarkIcon,
-  ChevronDownIcon,
   ShoppingCartIcon,
   UserCircleIcon,
   HeartIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
-import { classNames } from '../_hooks/classNames'
 import { NavLink, NavLinks } from '../_components/Links'
 import Image from 'next/image'
 
@@ -48,9 +39,15 @@ const iconButtons = [
   },
 ]
 
+const links = [
+  { label: 'Produkter', href: '/products' },
+  { label: 'FAQ', href: '/faq' },
+  { label: 'Kontakta oss', href: '/kontakta-oss' },
+]
+
 const Logo = () => {
   return (
-    <Link href="#" className="-m-1.5 p-1.5">
+    <Link href="/" className="-m-1.5 p-1.5">
       <span className="sr-only">Your Company</span>
       <Image
         src="/logo.svg"
@@ -63,8 +60,6 @@ const Logo = () => {
     </Link>
   )
 }
-
-const links = ['Kollektion', 'FAQ', 'Kontakta oss']
 
 export const MainNav = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
