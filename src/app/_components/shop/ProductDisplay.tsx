@@ -12,8 +12,7 @@ const productQuery = ({ firstOrLast, amount }: ProductQuery = {}) => {
   const position = !firstOrLast ? 'first' : firstOrLast
   const amountOfItems = !amount ? 8 : amount
 
-  return {
-    query: gql`
+  return gql`
         {
           products(${position}: ${amountOfItems}) {
             nodes {
@@ -38,8 +37,7 @@ const productQuery = ({ firstOrLast, amount }: ProductQuery = {}) => {
             }
           }
         }
-      `,
-  }
+      `
 }
 
 export default async function ProductDisplay() {
