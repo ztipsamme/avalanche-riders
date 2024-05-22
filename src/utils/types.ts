@@ -39,15 +39,17 @@ export type ShopifyExtension = {
   }
 }
 
+export type Image = {
+  altText: string
+  height: number
+  id: string
+  url: string
+  width: number
+}
+
 export type ShopifyProduct = {
   description: string
-  featuredImage: {
-    altText: string
-    height: number
-    id: string
-    url: string
-    width: number
-  }
+  featuredImage: Image
   handle: string
   id: string
   priceRangeV2: {
@@ -58,6 +60,17 @@ export type ShopifyProduct = {
   }
   tags: string[]
   title: string
+  variants: { nodes: ShopifyProductVariant[] }
+  variantsCount: {
+    count: number
+  }
+}
+
+export type ShopifyProductVariant = {
+  id: string
+  title: string
+  price: string
+  image?: Image
 }
 
 export type Products = {
