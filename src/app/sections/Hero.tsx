@@ -13,14 +13,6 @@ const PrimaryButton = ({ href, children }: TNavLink) => {
   )
 }
 
-// const SecondaryButton = ({ href, children }: TNavLink) => {
-//   return (
-//     <Link href={href} className="text-sm font-semibold leading-6 text-gray-900">
-//       {children}
-//     </Link>
-//   )
-// }
-
 const cms = {
   title: 'Erövra Backarna',
   description:
