@@ -14,7 +14,6 @@ export default async function ProductCard({
     hasFeaturedImage && featuredImage.altText ? featuredImage.altText : ''
   const url = hasFeaturedImage && featuredImage.url ? featuredImage.url : ''
 
-  console.log(product)
   return (
     <a key={product.id} href={`/product/${productId}`} className="group">
       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
