@@ -19,6 +19,12 @@ const tailwindconfig: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      colors: {
+        primary: '#0c4a6e',
+        primaryHover: '#082f49',
+        primaryFocus: '#075985',
+        primaryActive: '#075985',
+      },
     },
   },
   plugins: [

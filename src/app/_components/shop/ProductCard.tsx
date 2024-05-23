@@ -1,3 +1,5 @@
+import { getId } from '@/utils/hooks/getId'
+import { getPrice } from '@/utils/hooks/getPrice'
 import { ShopifyProduct } from '@/utils/types'
 import Image from 'next/image'
 
@@ -7,7 +9,6 @@ export default async function ProductCard({
   product: ShopifyProduct
 }) {
   const { amount, currencyCode } = product.priceRangeV2.minVariantPrice
-  const productId = product.id.split('/').pop()
   const featuredImage = product.featuredImage
   const hasFeaturedImage = Boolean(featuredImage)
   const altText =
@@ -15,7 +16,11 @@ export default async function ProductCard({
   const url = hasFeaturedImage && featuredImage.url ? featuredImage.url : ''
 
   return (
-    <a key={product.id} href={`/product/${productId}`} className="group">
+    <a
+      key={product.id}
+      href={`/product/${getId(product.id)}`}
+      className="group"
+    >
       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
         {hasFeaturedImage && (
           <Image
@@ -28,7 +33,7 @@ export default async function ProductCard({
       </div>
       <h3 className="mt-4 text-sm text-gray-700">{product.title}</h3>
       <p className="mt-1 text-lg font-medium text-gray-900">
-        {`${amount} ${currencyCode}`}
+        {getPrice(product)}
       </p>
     </a>
   )
