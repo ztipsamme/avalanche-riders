@@ -8,7 +8,6 @@ export default async function ProductCard({
 }: {
   product: ShopifyProduct
 }) {
-  const { amount, currencyCode } = product.priceRangeV2.minVariantPrice
   const featuredImage = product.featuredImage
   const hasFeaturedImage = Boolean(featuredImage)
   const altText =
@@ -27,7 +26,7 @@ export default async function ProductCard({
             alt={altText}
             src={url}
             fill
-            className="h-full w-full object-cover object-center group-hover:opacity-75"
+            className="h-full w-full object-contain lg:object-cover object-center group-hover:opacity-75"
           />
         )}
       </div>

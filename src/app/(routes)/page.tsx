@@ -5,7 +5,7 @@ export default async function Page() {
   return (
     <main>
       <Hero />
-      <ProductDisplay />
+      <ProductDisplay title="Produkter" />
     </main>
   )
 }

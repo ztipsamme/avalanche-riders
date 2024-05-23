@@ -76,3 +76,5 @@ export type ShopifyProductVariant = {
 export type Products = {
   products: { nodes: ShopifyProduct[] }
 }
+
+export type Product = { product: ShopifyProduct }
