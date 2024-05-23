@@ -3,12 +3,13 @@
 import { PrimaryButton } from '@/app/_UI/Button'
 import { classNames } from '@/utils/hooks/classNames'
 import { getPrice } from '@/utils/hooks/getPrice'
-import { ShopifyProduct, ShopifyProductVariant } from '@/utils/types'
-import { RadioGroup, RadioGroupOption } from '@headlessui/react'
+import { hasVariants } from '@/utils/hooks/hasVariants'
+import { Product, ShopifyProductVariant } from '@/utils/types'
+import { RadioGroup } from '@headlessui/react'
 import Image from 'next/image'
 import { useState } from 'react'
 
-export const ProductImage = ({ product }: { product: ShopifyProduct }) => {
+export const ProductImage = ({ product }: Product) => {
   return (
     <div className="aspect-1">
       <Image
@@ -95,10 +96,7 @@ export const VariantSelector = ({
   )
 }
 
-export const ProductInfo = ({ product }: { product: ShopifyProduct }) => {
-  const hasVariants =
-    product.variants?.nodes && product.variants.nodes.length >= 2
-
+export const ProductInfo = ({ product }: Product) => {
   return (
     <div>
       <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
@@ -121,7 +119,9 @@ export const ProductInfo = ({ product }: { product: ShopifyProduct }) => {
       {/* <Reviews /> */}
 
       <form className="mt-6">
-        {hasVariants && <VariantSelector variants={product.variants?.nodes} />}
+        {hasVariants(product) && (
+          <VariantSelector variants={product.variants?.nodes} />
+        )}
 
         <div className="mt-10 flex max-w-80">
           <PrimaryButton props={{ type: 'submit' }}>

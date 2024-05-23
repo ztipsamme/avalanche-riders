@@ -1,7 +1,7 @@
 import { BreadcrumbsNav } from '@/app/_UI/BreadcrumbsNav'
 import { ProductInfo } from '@/app/_components/shop/SingleProduct'
 import { getSingleProduct, gql } from '@/utils/gql'
-import { ShopifyProduct } from '@/utils/types'
+import { Product } from '@/utils/types'
 import Image from 'next/image'
 
 type SingleProductPageProps = {
@@ -54,7 +54,7 @@ const productQuery = (id: string) => gql`
 
 export default async function Page({ params }: SingleProductPageProps) {
   const id = params.productId
-  const { product } = await getSingleProduct<{ product: ShopifyProduct }>({
+  const { product } = await getSingleProduct<Product>({
     query: productQuery(id),
     id: id,
   })
