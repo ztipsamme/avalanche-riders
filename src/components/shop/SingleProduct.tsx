@@ -1,13 +1,13 @@
 'use client'
 
-import { PrimaryButton } from '@/app/_UI/Button'
-import { classNames } from '@/utils/hooks/classNames'
-import { getPrice } from '@/utils/hooks/getPrice'
-import { hasVariants } from '@/utils/hooks/hasVariants'
-import { Product, ShopifyProductVariant } from '@/utils/types'
+import { classNames } from '@/utils/classNames'
+import { getPrice } from '@/utils/getPrice'
+import { hasVariants } from '@/utils/hasVariants'
+import { Product, ShopifyProductVariant } from '@/types'
 import { RadioGroup } from '@headlessui/react'
 import Image from 'next/image'
 import { useState } from 'react'
+import { PrimaryButton } from '../ui/Button'
 
 export const ProductImage = ({ product }: Product) => {
   return (

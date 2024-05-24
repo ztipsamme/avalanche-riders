@@ -1,6 +1,6 @@
 'use client'
 
-import { ScreenSizeProvider } from '../../utils/contexts/ScreenSizeContext'
+import { ScreenSizeProvider } from '@/contexts/ScreenSizeContext'
 import MainNav from './MainNav'
 
 const Home = () => {

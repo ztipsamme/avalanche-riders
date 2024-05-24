@@ -1,7 +1,7 @@
-import { getId } from '@/utils/hooks/getId'
-import { getPrice } from '@/utils/hooks/getPrice'
-import { ShopifyProduct } from '@/utils/types'
+import { ShopifyProduct } from '@/types'
 import Image from 'next/image'
+import { formatId } from '@/utils/formatId'
+import { getPrice } from '@/utils/getPrice'
 
 export default async function ProductCard({
   product,
@@ -17,7 +17,7 @@ export default async function ProductCard({
   return (
     <a
       key={product.id}
-      href={`/product/${getId(product.id)}`}
+      href={`/product/${formatId(product.id)}`}
       className="group"
     >
       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">

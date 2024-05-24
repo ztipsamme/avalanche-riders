@@ -1,4 +1,4 @@
-import { Children } from '@/utils/types'
+import { Children } from '@/types'
 import { Button } from '@headlessui/react'
 
 type Button = {

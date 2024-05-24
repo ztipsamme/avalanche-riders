@@ -1,7 +1,7 @@
-import { BreadcrumbsNav } from '@/app/_UI/BreadcrumbsNav'
-import { ProductInfo } from '@/app/_components/shop/SingleProduct'
+import { BreadcrumbsNav } from '@/components/ui/BreadcrumbsNav'
+import { ProductInfo } from '@/components/shop/SingleProduct'
 import { getSingleProduct, gql } from '@/utils/gql'
-import { Product } from '@/utils/types'
+import { Product } from '@/types'
 import Image from 'next/image'
 
 type SingleProductPageProps = {

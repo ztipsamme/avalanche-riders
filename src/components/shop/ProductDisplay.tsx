@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import ProductCard from './ProductCard'
 import { getProducts, gql } from '@/utils/gql'
-import { Products, ShopifyProduct } from '@/utils/types'
+import { Products, ShopifyProduct } from '@/types'
 
 type ProductQuery = Partial<{
   firstOrLast: 'first' | 'last'
