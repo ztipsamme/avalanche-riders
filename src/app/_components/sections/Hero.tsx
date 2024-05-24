@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { TNavLink } from '../../utils/types'
+import { TNavLink } from '../../../utils/types'
 
 const PrimaryButton = ({ href, children }: TNavLink) => {
   return (
@@ -37,7 +37,7 @@ const Hero = () => {
         </h1>
         <p className="mt-6 text-lg leading-8">{cms.description}</p>
         <div className="mt-10 flex gap-x-6">
-          <PrimaryButton href="#">Spana in brädorna</PrimaryButton>
+          <PrimaryButton href="/products">Spana in brädorna</PrimaryButton>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import ProductDisplay from '../_components/shop/ProductDisplay'
-import Hero from '../sections/Hero'
+import Hero from '../_components/sections/Hero'
 
 export default async function Page() {
   return (
