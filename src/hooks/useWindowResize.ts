@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import tailwindconfig from '../../../tailwind.config'
 import resolveConfig from 'tailwindcss/resolveConfig'
+import tailwindconfig from '../../tailwind.config'
 
 type Breakpoint = {
   [key in 'name' | 'size']: string

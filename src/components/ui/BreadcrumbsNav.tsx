@@ -1,11 +1,11 @@
-import { getId } from '@/utils/hooks/getId'
+import { formatId } from '@/utils/formatId'
 
 type BreadcrumbsNav = { [key in 'label' | 'href']: string }
 
 export const BreadcrumbsNav = ({ label, href }: BreadcrumbsNav) => {
   const breadcrumbs = [
     { label: 'Produkt', href: '/product' },
-    { label: label, href: getId(href) },
+    { label: label, href: formatId(href) },
   ]
 
   return (

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Fragment, useContext } from 'react'
-import { DropDownItem, TNavLink, DropdownProduct } from '../../utils/types'
-import { ScreenSizeContext } from '@/utils/contexts/ScreenSizeContext'
+import { DropDownItem, TNavLink, DropdownProduct } from '@/types'
+import { ScreenSizeContext } from '@/contexts/ScreenSizeContext'
 
 export const NavLink = ({ href, icon, ariaLabel, children }: TNavLink) => {
   const { isDesktop } = useContext(ScreenSizeContext)
