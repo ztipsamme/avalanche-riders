@@ -1,13 +1,19 @@
 'use client'
 
-import { ScreenSizeProvider } from '../../utils/contexts/ScreenSizeContext'
+import { CartProvider } from '@/contexts/CartContext'
+import { ScreenSizeProvider } from '../../contexts/ScreenSizeContext'
 import MainNav from './MainNav'
+import { MobileNavContextProvider } from '@/contexts/MobileNavContext'
 
 const Home = () => {
   return (
     <ScreenSizeProvider>
       <header className="bg-white sticky top-0 z-10">
-        <MainNav />
+        <MobileNavContextProvider>
+          <CartProvider>
+            <MainNav />
+          </CartProvider>
+        </MobileNavContextProvider>
       </header>
     </ScreenSizeProvider>
   )

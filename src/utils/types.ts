@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { MouseEventHandler, ReactNode } from 'react'
 
 export type Children = { children: ReactNode }
 
@@ -21,6 +21,7 @@ export type TNavLink = Partial<Children> & {
   href: string
   icon?: ReactNode
   ariaLabel?: string
+  onClick?: MouseEventHandler<HTMLAnchorElement>
 }
 
 export type DropDownItem<T> = {

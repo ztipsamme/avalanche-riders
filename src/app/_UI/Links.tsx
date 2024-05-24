@@ -1,9 +1,15 @@
 import Link from 'next/link'
 import { Fragment, useContext } from 'react'
 import { DropDownItem, TNavLink, DropdownProduct } from '../../utils/types'
-import { ScreenSizeContext } from '@/utils/contexts/ScreenSizeContext'
+import { ScreenSizeContext } from '@/contexts/ScreenSizeContext'
 
-export const NavLink = ({ href, icon, ariaLabel, children }: TNavLink) => {
+export const NavLink = ({
+  href,
+  icon,
+  ariaLabel,
+  children,
+  onClick,
+}: TNavLink) => {
   const { isDesktop } = useContext(ScreenSizeContext)
   if (isDesktop) {
     return (
@@ -11,6 +17,7 @@ export const NavLink = ({ href, icon, ariaLabel, children }: TNavLink) => {
         href={href}
         className={`.nav-link ${icon && '.nav-link-with-icon'}`}
         aria-label={ariaLabel}
+        onClick={onClick}
       >
         {children}
       </Link>
@@ -20,6 +27,8 @@ export const NavLink = ({ href, icon, ariaLabel, children }: TNavLink) => {
     <Link
       href={href}
       className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+      aria-label={ariaLabel}
+      onClick={onClick}
     >
       {children}
     </Link>
