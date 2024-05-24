@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Fragment, useContext } from 'react'
-import { DropDownItem, TNavLink, DropdownProduct } from '../../utils/types'
+import { DropDownItem, TNavLink, DropdownProduct } from '@/types'
 import { ScreenSizeContext } from '@/contexts/ScreenSizeContext'
 
 export const NavLink = ({

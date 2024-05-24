@@ -7,8 +7,6 @@ import {
   TransitionChild,
 } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-
-import { Children } from '@/utils/types'
 import { CartContext } from '@/contexts/CartContext'
 
 const products = [

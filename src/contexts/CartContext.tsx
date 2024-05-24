@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react'
-import { Children } from '../utils/types'
+import { Children } from '@/types'
 
 type CartContext = {
   cartOpen: boolean

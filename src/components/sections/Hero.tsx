@@ -1,6 +1,6 @@
+import { TNavLink } from '@/types'
 import Image from 'next/image'
 import Link from 'next/link'
-import { TNavLink } from '../../../utils/types'
 
 const PrimaryButton = ({ href, children }: TNavLink) => {
   return (
