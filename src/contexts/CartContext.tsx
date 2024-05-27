@@ -6,13 +6,15 @@ type CartContext = {
   handleCart: () => void
 }
 
+const defaultState = false
+
 export const CartContext = createContext<CartContext>({
-  cartOpen: false,
+  cartOpen: defaultState,
   handleCart: () => {},
 })
 
 export const CartProvider = ({ children }: Children) => {
-  const [cartOpen, setCartOpen] = useState(false)
+  const [cartOpen, setCartOpen] = useState(defaultState)
 
   const handleCart = () => {
     setCartOpen((prev) => !prev)

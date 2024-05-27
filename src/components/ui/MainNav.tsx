@@ -16,6 +16,10 @@ import { NavLink, NavLinks } from './Links'
 import Cart from './Cart'
 import { CartContext } from '@/contexts/CartContext'
 import { MobileNavContext } from '@/contexts/MobileNavContext'
+import {
+  CustomerCartContext,
+  CustomerCartProvider,
+} from '@/contexts/CustomerCartContext'
 
 const iconStyle = 'h-5 w-5 flex-none'
 
@@ -167,7 +171,9 @@ export const MainNav = () => {
 
       <MobileNav />
 
-      <Cart />
+      <CustomerCartProvider>
+        <Cart />
+      </CustomerCartProvider>
     </>
   )
 }

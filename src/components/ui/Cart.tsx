@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { useContext } from 'react'
 import {
   Dialog,
   DialogPanel,
@@ -8,6 +8,12 @@ import {
 } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { CartContext } from '@/contexts/CartContext'
+import { useCart } from '@/contexts/CustomerCartContext'
+import Image from 'next/image'
+import { getPrice } from '@/utils/getPrice'
+import { hasVariants } from '@/utils/hasVariants'
+import { getSingleProductUrl } from '@/utils/getSingleProductUrl'
+import Link from 'next/link'
 
 const products = [
   {
@@ -39,6 +45,7 @@ const products = [
 
 export default function Cart() {
   const { cartOpen, handleCart } = useContext(CartContext)
+  const { cart } = useCart()
 
   return (
     <Transition show={cartOpen}>
@@ -84,20 +91,33 @@ export default function Cart() {
                           </button>
                         </div>
                       </div>
-
+                      {cart.length === 0 && (
+                        <p className="mt-0.5 text-sm text-gray-500">
+                          {`Your cart is currently empty. `}
+                          <Link
+                            href={'/products'}
+                            className="font-medium text-primary hover:text-primaryHover"
+                            onClick={handleCart}
+                          >
+                            {`Let's browse`}
+                            <span aria-hidden="true"> &rarr;</span>
+                          </Link>
+                        </p>
+                      )}
                       <div className="mt-8">
                         <div className="flow-root">
                           <ul
                             role="list"
                             className="-my-6 divide-y divide-gray-200"
                           >
-                            {products.map((product) => (
+                            {cart.map(({ product, amount }) => (
                               <li key={product.id} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                  <img
-                                    src={product.imageSrc}
-                                    alt={product.imageAlt}
+                                  <Image
+                                    src={product.featuredImage.url}
+                                    alt={product.featuredImage.altText}
                                     className="h-full w-full object-cover object-center"
+                                    fill
                                   />
                                 </div>
 
@@ -105,19 +125,23 @@ export default function Cart() {
                                   <div>
                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                       <h3>
-                                        <a href={product.href}>
-                                          {product.name}
+                                        <a href={getSingleProductUrl(product)}>
+                                          {product.title}
                                         </a>
                                       </h3>
-                                      <p className="ml-4">{product.price}</p>
+                                      <p className="ml-4">
+                                        {getPrice(product)}
+                                      </p>
                                     </div>
-                                    <p className="mt-1 text-sm text-gray-500">
-                                      {product.color}
-                                    </p>
+                                    {hasVariants(product) && (
+                                      <p className="mt-1 text-sm text-gray-500">
+                                        {product.title}
+                                      </p>
+                                    )}
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
                                     <p className="text-gray-500">
-                                      Qty {product.quantity}
+                                      Qty {amount}
                                     </p>
 
                                     <div className="flex">

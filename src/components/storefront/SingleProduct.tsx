@@ -4,10 +4,17 @@ import { classNames } from '@/utils/classNames'
 import { getPrice } from '@/utils/getPrice'
 import { hasVariants } from '@/utils/hasVariants'
 import { Product, ShopifyProductVariant } from '@/types'
-import { RadioGroup } from '@headlessui/react'
+import { Label, Radio, RadioGroup } from '@headlessui/react'
 import Image from 'next/image'
-import { useState } from 'react'
+import { Dispatch, FormEvent, SetStateAction, useState } from 'react'
 import { PrimaryButton } from '../ui/Button'
+import { useCart } from '@/contexts/CustomerCartContext'
+
+type VariantSelectorProps = {
+  variants: ShopifyProductVariant[]
+  selectedVariant: ShopifyProductVariant | null
+  setSelectedVariant: Dispatch<SetStateAction<ShopifyProductVariant | null>>
+}
 
 export const ProductImage = ({ product }: Product) => {
   return (
@@ -25,10 +32,9 @@ export const ProductImage = ({ product }: Product) => {
 
 export const VariantSelector = ({
   variants,
-}: {
-  variants: ShopifyProductVariant[]
-}) => {
-  const [selectedVariant, setSelectedVariant] = useState(variants[0])
+  selectedVariant,
+  setSelectedVariant,
+}: VariantSelectorProps) => {
   const inStock = true
 
   return (
@@ -36,30 +42,30 @@ export const VariantSelector = ({
       <h3 className="sr-only">Variant</h3>
 
       <RadioGroup value={selectedVariant} onChange={setSelectedVariant}>
-        <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
+        <Label className="sr-only">Choose a size</Label>
         <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
           {variants.map((variant) => (
-            <RadioGroup.Option
+            <Radio
               key={variant.title}
               value={variant}
               disabled={!inStock}
-              className={({ active }) =>
+              className={({ focus }) =>
                 classNames(
                   inStock
                     ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
                     : 'cursor-not-allowed bg-gray-50 text-gray-200',
-                  active ? 'ring-2 ring-primaryActive' : '',
+                  focus ? 'ring-2 ring-primaryActive' : '',
                   'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6'
                 )
               }
             >
-              {({ active, checked }) => (
+              {({ focus, checked }) => (
                 <>
-                  <RadioGroup.Label as="span">{variant.title}</RadioGroup.Label>
+                  <Label as="span">{variant.title}</Label>
                   {inStock ? (
                     <span
                       className={classNames(
-                        active ? 'border' : 'border-2',
+                        focus ? 'border' : 'border-2',
                         checked ? 'border-primaryFocus' : 'border-transparent',
                         'pointer-events-none absolute -inset-px rounded-md'
                       )}
@@ -88,7 +94,7 @@ export const VariantSelector = ({
                   )}
                 </>
               )}
-            </RadioGroup.Option>
+            </Radio>
           ))}
         </div>
       </RadioGroup>
@@ -97,6 +103,36 @@ export const VariantSelector = ({
 }
 
 export const ProductInfo = ({ product }: Product) => {
+  const { addToCart } = useCart()
+  const [selectedVariant, setSelectedVariant] =
+    useState<ShopifyProductVariant | null>(null)
+  const hasVariant = hasVariants(product)
+  const [errorMessage, setErrorMessage] = useState(false)
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    if ((hasVariant && selectedVariant) || !hasVariant) {
+      setErrorMessage(false)
+    }
+
+    if (hasVariant && selectedVariant) {
+      addToCart({
+        product: product,
+        variant: selectedVariant,
+      })
+      return
+    }
+
+    if (!hasVariant) {
+      addToCart({
+        product: product,
+      })
+      return
+    }
+
+    setErrorMessage(true)
+  }
   return (
     <div>
       <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
@@ -116,14 +152,21 @@ export const ProductInfo = ({ product }: Product) => {
         </div>
       </div>
 
-      {/* <Reviews /> */}
-
-      <form className="mt-6">
+      <form className="mt-6" onSubmit={handleSubmit}>
         {hasVariants(product) && (
-          <VariantSelector variants={product.variants?.nodes} />
+          <VariantSelector
+            variants={product.variants?.nodes}
+            selectedVariant={selectedVariant}
+            setSelectedVariant={setSelectedVariant}
+          />
         )}
 
-        <div className="mt-10 flex max-w-80">
+        <div className="mt-4  max-w-80">
+          <div className="h-6">
+            {errorMessage && (
+              <p className="text-sm text-gray-500">No variant selected!</p>
+            )}
+          </div>
           <PrimaryButton props={{ type: 'submit' }}>
             Lägg till i varukorg
           </PrimaryButton>

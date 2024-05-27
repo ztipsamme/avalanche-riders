@@ -2,6 +2,7 @@ import { ShopifyProduct } from '@/types'
 import Image from 'next/image'
 import { formatId } from '@/utils/formatId'
 import { getPrice } from '@/utils/getPrice'
+import { getSingleProductUrl } from '@/utils/getSingleProductUrl'
 
 export default async function ProductCard({
   product,
@@ -15,11 +16,7 @@ export default async function ProductCard({
   const url = hasFeaturedImage && featuredImage.url ? featuredImage.url : ''
 
   return (
-    <a
-      key={product.id}
-      href={`/product/${formatId(product.id)}`}
-      className="group"
-    >
+    <a key={product.id} href={getSingleProductUrl(product)} className="group">
       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
         {hasFeaturedImage && (
           <Image
