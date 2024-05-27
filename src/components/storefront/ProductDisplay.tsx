@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import ProductCard from './ProductCard'
-import { getProducts, gql } from '@/utils/gql'
+import { gql, useShopifyStorefrontRequest } from '@/utils/gql'
 import { Products, ShopifyProduct } from '@/types'
 
 type ProductQuery = Partial<{
@@ -47,7 +47,9 @@ export default async function ProductDisplay({
   title,
 }: ProductQuery = {}) {
   const query = { firstOrLast: firstOrLast, amount: amount }
-  const { products } = await getProducts<Products>(productQuery(query))
+  const { products } = await useShopifyStorefrontRequest<Products>({
+    query: productQuery(query),
+  })
 
   return (
     <div className="bg-white">

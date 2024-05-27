@@ -1,8 +1,9 @@
 import { BreadcrumbsNav } from '@/components/ui/BreadcrumbsNav'
-import { ProductInfo } from '@/components/shop/SingleProduct'
-import { getSingleProduct, gql } from '@/utils/gql'
+import { ProductInfo } from '@/components/storefront/SingleProduct'
+import { gql, useShopifyStorefrontRequest } from '@/utils/gql'
 import { Product } from '@/types'
 import Image from 'next/image'
+import { CustomerCartProvider } from '@/contexts/CustomerCartContext'
 
 type SingleProductPageProps = {
   params: {
@@ -54,9 +55,12 @@ const productQuery = (id: string) => gql`
 
 export default async function Page({ params }: SingleProductPageProps) {
   const id = params.productId
-  const { product } = await getSingleProduct<Product>({
+
+  const { product } = await useShopifyStorefrontRequest<Product>({
     query: productQuery(id),
-    id: id,
+    variables: {
+      id: `gid://shopify/Product/${id}`,
+    },
   })
 
   return (
@@ -72,7 +76,9 @@ export default async function Page({ params }: SingleProductPageProps) {
             className="object-contain"
           />
         </div>
-        <ProductInfo product={product} />
+        <CustomerCartProvider>
+          <ProductInfo product={product} />
+        </CustomerCartProvider>
       </div>
     </div>
   )

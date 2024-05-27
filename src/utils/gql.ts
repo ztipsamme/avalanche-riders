@@ -1,11 +1,20 @@
 export const gql = String.raw
 
-const headers = {
-  'Content-Type': 'application/json',
-  'X-Shopify-Access-Token': process.env.ADMIN_API_ACCESS_TOKEN!,
-}
+export type UseShopifyStorefrontRequest = { query: string; variables?: {} }
 
-const checkRes = async (res: Response) => {
+export const useShopifyStorefrontRequest = async <T>({
+  query,
+  variables,
+}: UseShopifyStorefrontRequest) => {
+  const res = await fetch(process.env.GRAPHQL_API_URL!, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Access-Token': process.env.ADMIN_API_ACCESS_TOKEN!,
+    },
+    body: JSON.stringify({ query, variables }),
+  })
+
   if (!res.ok) {
     const text = await res.text()
     throw new Error(`
@@ -14,40 +23,6 @@ const checkRes = async (res: Response) => {
       Response: ${text}
     `)
   }
-}
-
-export const getProducts = async <T>(query: string): Promise<T> => {
-  const res = await fetch(process.env.GRAPHQL_API_URL!, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify({ query }),
-  })
-
-  checkRes(res)
-
-  const { data } = await res.json()
-
-  return data as T
-}
-
-type GetSingleProduct = { [key in 'query' | 'id']: string }
-
-export const getSingleProduct = async <T>({
-  query,
-  id,
-}: GetSingleProduct): Promise<T> => {
-  const res = await fetch(process.env.GRAPHQL_API_URL!, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify({
-      query: query,
-      variables: {
-        id: `gid://shopify/Product/${id}`,
-      },
-    }),
-  })
-
-  checkRes(res)
 
   const { data } = await res.json()
 
