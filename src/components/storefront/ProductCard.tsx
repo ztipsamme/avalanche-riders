@@ -1,6 +1,5 @@
 import { ShopifyProduct } from '@/types'
 import Image from 'next/image'
-import { formatId } from '@/utils/formatId'
 import { getPrice } from '@/utils/getPrice'
 import { getSingleProductUrl } from '@/utils/getSingleProductUrl'
 
