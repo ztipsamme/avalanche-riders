@@ -53,7 +53,7 @@ export type ShopifyProduct = {
   featuredImage: Image
   handle: string
   id: string
-  priceRangeV2: {
+  priceRange: {
     minVariantPrice: {
       amount: string
       currencyCode: string

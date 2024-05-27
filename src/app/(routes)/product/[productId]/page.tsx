@@ -1,6 +1,6 @@
 import { BreadcrumbsNav } from '@/components/ui/BreadcrumbsNav'
 import { ProductInfo } from '@/components/storefront/SingleProduct'
-import { gql, useShopifyStorefrontRequest } from '@/utils/gql'
+import { fetchFromShopify, gql } from '@/utils/gql'
 import { Product } from '@/types'
 import Image from 'next/image'
 import { CustomerCartProvider } from '@/contexts/CustomerCartContext'
@@ -11,9 +11,9 @@ type SingleProductPageProps = {
   }
 }
 
-const productQuery = (id: string) => gql`
-  {
-    product(id: "gid://shopify/Product/${id}") {
+const query = gql`
+  query ProductQuery($id: ID) {
+    product(id: $id) {
       id
       description
       featuredImage {
@@ -24,7 +24,7 @@ const productQuery = (id: string) => gql`
         width
       }
       handle
-      priceRangeV2 {
+      priceRange {
         minVariantPrice {
           amount
           currencyCode
@@ -35,7 +35,6 @@ const productQuery = (id: string) => gql`
       variants(first: 10) {
         nodes {
           id
-          price
           title
           image {
             altText
@@ -44,10 +43,11 @@ const productQuery = (id: string) => gql`
             url
             width
           }
+          price {
+            amount
+            currencyCode
+          }
         }
-      }
-      variantsCount {
-        count
       }
     }
   }
@@ -56,11 +56,9 @@ const productQuery = (id: string) => gql`
 export default async function Page({ params }: SingleProductPageProps) {
   const id = params.productId
 
-  const { product } = await useShopifyStorefrontRequest<Product>({
-    query: productQuery(id),
-    variables: {
-      id: `gid://shopify/Product/${id}`,
-    },
+  const { product } = await fetchFromShopify<Product>({
+    query: query,
+    variables: { id: `gid://shopify/Product/${id}` },
   })
 
   return (

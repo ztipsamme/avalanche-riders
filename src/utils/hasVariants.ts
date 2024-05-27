@@ -1,4 +1,4 @@
 import { ShopifyProduct } from '../types'
 
 export const hasVariants = (product: ShopifyProduct): Boolean =>
-  product.variantsCount && product.variantsCount.count >= 2
+  product.variants.nodes && product.variants.nodes.length >= 2
