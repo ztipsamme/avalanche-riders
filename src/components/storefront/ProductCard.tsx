@@ -23,6 +23,7 @@ export default async function ProductCard({
             alt={altText}
             src={url}
             fill
+            sizes="(max-width: 768px) 100vw, 33vw"
             className="h-full w-full object-contain lg:object-cover object-center group-hover:opacity-75"
           />
         )}

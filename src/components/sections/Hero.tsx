@@ -25,6 +25,7 @@ const Hero = () => {
       <Image
         src={'/snowboard images/pexels-lazarevkirill-8696256.jpg'}
         fill
+        sizes="(max-width: 3000px) 100vw, 33vw"
         loading="lazy"
         alt=""
         className="scale-x-[-1] scale-[1.2] top-0 object-cover"

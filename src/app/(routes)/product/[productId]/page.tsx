@@ -73,6 +73,7 @@ export default async function Page({ params }: SingleProductPageProps) {
             alt={product.featuredImage.altText}
             src={product.featuredImage.url}
             fill
+            sizes="(max-width: 768px) 100vw, 33vw"
             className="object-contain"
           />
         </div>

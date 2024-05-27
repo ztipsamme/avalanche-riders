@@ -22,6 +22,7 @@ export const ProductImage = ({ product }: Product) => {
       <Image
         src={product.featuredImage.url}
         fill
+        sizes="(max-width: 768px) 100vw, 33vw"
         loading="lazy"
         alt={product.featuredImage.altText}
         className="object-cover"

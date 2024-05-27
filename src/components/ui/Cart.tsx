@@ -118,6 +118,7 @@ export default function Cart() {
                                     alt={product.featuredImage.altText}
                                     className="h-full w-full object-cover object-center"
                                     fill
+                                    sizes="(max-width: 768px) 100vw, 33vw"
                                   />
                                 </div>
 
