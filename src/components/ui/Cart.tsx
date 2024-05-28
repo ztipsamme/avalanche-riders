@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import {
   Dialog,
   DialogPanel,
@@ -7,48 +6,19 @@ import {
   TransitionChild,
 } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { CartContext } from '@/contexts/CartContext'
-import { useCart } from '@/contexts/CustomerCartContext'
+import { useCart } from '@/contexts/CartContext'
 import Image from 'next/image'
 import { getPrice } from '@/utils/getPrice'
 import { hasVariants } from '@/utils/hasVariants'
 import { getSingleProductUrl } from '@/utils/getSingleProductUrl'
 import Link from 'next/link'
 
-const products = [
-  {
-    id: 1,
-    name: 'Throwback Hip Bag',
-    href: '#',
-    color: 'Salmon',
-    price: '$90.00',
-    quantity: 1,
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt:
-      'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-  },
-  {
-    id: 2,
-    name: 'Medium Stuff Satchel',
-    href: '#',
-    color: 'Blue',
-    price: '$32.00',
-    quantity: 1,
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-  },
-  // More products...
-]
-
 export default function Cart() {
-  const { cartOpen, handleCart } = useContext(CartContext)
+  const { open, handleCart } = useCart()
   const { cart } = useCart()
 
   return (
-    <Transition show={cartOpen}>
+    <Transition show={open}>
       <Dialog className="relative z-10" onClose={handleCart}>
         <TransitionChild
           enter="ease-in-out duration-500"

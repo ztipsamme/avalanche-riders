@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import { Children } from '@/types'
 
 export type MobileNavContext = {
@@ -24,3 +24,5 @@ export const MobileNavContextProvider = ({ children }: Children) => {
     </MobileNavContext.Provider>
   )
 }
+
+export const useMobileNav = (): MobileNavContext => useContext(MobileNavContext)

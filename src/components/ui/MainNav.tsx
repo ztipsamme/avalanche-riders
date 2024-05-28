@@ -1,25 +1,22 @@
 'use client'
 
-import { useContext } from 'react'
+import { useCart } from '@/contexts/CartContext'
+import { MobileNavContext, useMobileNav } from '@/contexts/MobileNavContext'
 import { Dialog, DialogPanel, PopoverGroup } from '@headlessui/react'
 import {
   Bars3Icon,
-  XMarkIcon,
-  ShoppingCartIcon,
-  UserCircleIcon,
   HeartIcon,
   MagnifyingGlassIcon,
+  ShoppingCartIcon,
+  UserCircleIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline'
-import Link from 'next/link'
 import Image from 'next/image'
-import { NavLink, NavLinks } from './Links'
+import Link from 'next/link'
+import { useContext } from 'react'
 import Cart from './Cart'
-import { CartContext } from '@/contexts/CartContext'
-import { MobileNavContext } from '@/contexts/MobileNavContext'
-import {
-  CustomerCartContext,
-  CustomerCartProvider,
-} from '@/contexts/CustomerCartContext'
+import { NavLink, NavLinks } from './Links'
+import { useDevice } from '@/contexts/ScreenSizeContext'
 
 const iconStyle = 'h-5 w-5 flex-none'
 
@@ -28,6 +25,13 @@ const links = [
   { label: 'FAQ', href: '/faq' },
   { label: 'Kontakta oss', href: '/kontakta-oss' },
 ]
+
+type link = {
+  label: string
+  href: string
+  icon: JSX.Element
+  onClick?: () => void
+}
 
 const generateIconButtons = (handleCart: () => void) => [
   {
@@ -53,9 +57,15 @@ const generateIconButtons = (handleCart: () => void) => [
   },
 ]
 
-const Logo = () => {
+const Logo = ({ handleNav }: { handleNav?: boolean }) => {
+  const { handleMobileNav } = useMobileNav()
+
   return (
-    <Link href="/" className="-m-1.5 p-1.5">
+    <Link
+      href="/"
+      className="-m-1.5 p-1.5"
+      onClick={handleNav ? handleMobileNav : undefined}
+    >
       <span className="sr-only">Your Company</span>
       <Image
         src="/logo.svg"
@@ -70,8 +80,8 @@ const Logo = () => {
 }
 
 const DesktopNav = () => {
-  const { handleCart } = useContext(CartContext)
-  const { handleMobileNav } = useContext(MobileNavContext)
+  const { handleCart } = useCart()
+  const { handleMobileNav } = useMobileNav()
 
   const iconButtons = generateIconButtons(handleCart)
   return (
@@ -113,9 +123,18 @@ const DesktopNav = () => {
 }
 
 const MobileNav = () => {
-  const { handleCart } = useContext(CartContext)
+  const { handleCart } = useCart()
   const iconButtons = generateIconButtons(handleCart)
-  const { mobileMenuOpen, handleMobileNav } = useContext(MobileNavContext)
+  const { mobileMenuOpen, handleMobileNav } = useMobileNav()
+
+  const handleNav = (link: link) => {
+    if (link.onClick) {
+      link.onClick()
+      handleMobileNav()
+    }
+
+    return
+  }
 
   return (
     <Dialog
@@ -126,7 +145,7 @@ const MobileNav = () => {
       <div className="fixed inset-0 z-10" />
       <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
         <div className="flex items-center justify-between">
-          <Logo />
+          <Logo handleNav />
           <button
             type="button"
             className="-m-2.5 rounded-md p-2.5 text-gray-700"
@@ -139,7 +158,7 @@ const MobileNav = () => {
         <div className="mt-6 flow-root">
           <div className="-my-6 divide-y divide-gray-500/10">
             <div className="space-y-2 py-6">
-              <NavLinks links={links} />
+              <NavLinks links={links} onClick={handleMobileNav} />
             </div>
             <div className="py-6">
               {iconButtons.map((link, index) => (
@@ -148,7 +167,7 @@ const MobileNav = () => {
                   href={link.href}
                   ariaLabel={link.label}
                   icon
-                  onClick={'onClick' in link ? link.onClick : undefined}
+                  onClick={() => handleNav(link)}
                 >
                   <div className="nav-link-with-icon">
                     {link.icon}
@@ -171,9 +190,7 @@ export const MainNav = () => {
 
       <MobileNav />
 
-      <CustomerCartProvider>
-        <Cart />
-      </CustomerCartProvider>
+      <Cart />
     </>
   )
 }

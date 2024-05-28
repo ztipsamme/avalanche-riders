@@ -8,7 +8,7 @@ import { Label, Radio, RadioGroup } from '@headlessui/react'
 import Image from 'next/image'
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react'
 import { PrimaryButton } from '../ui/Button'
-import { useCart } from '@/contexts/CustomerCartContext'
+import { useCart } from '@/contexts/CartContext'
 
 type VariantSelectorProps = {
   variants: ShopifyProductVariant[]

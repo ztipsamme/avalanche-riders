@@ -1,28 +1,55 @@
-import { createContext, useState } from 'react'
-import { Children } from '@/types'
+'use client'
+import { createContext, useContext, useState } from 'react'
+import { Children, ShopifyProduct, ShopifyProductVariant } from '@/types'
+
+type Cart = (CartProduct & { amount: number })[]
 
 type CartContext = {
-  cartOpen: boolean
+  open: boolean
+  cart: Cart
   handleCart: () => void
+  addToCart: (product: CartProduct) => void
 }
 
-const defaultState = false
+type CartProduct = {
+  product: ShopifyProduct
+  variant?: ShopifyProductVariant
+}
 
 export const CartContext = createContext<CartContext>({
-  cartOpen: defaultState,
+  open: false,
+  cart: [],
   handleCart: () => {},
+  addToCart: () => {},
 })
 
-export const CartProvider = ({ children }: Children) => {
-  const [cartOpen, setCartOpen] = useState(defaultState)
+export const CartContextProvider = ({ children }: Children) => {
+  const [open, setOpen] = useState(false)
+  const [cart, setCart] = useState<Cart>([])
 
   const handleCart = () => {
-    setCartOpen((prev) => !prev)
+    setOpen((prev) => !prev)
+  }
+
+  const addToCart = (props: CartProduct) => {
+    const itemAlreadyInCart = cart.find(
+      (cartObject) => cartObject.product?.id === props.product.id
+    )
+
+    if (itemAlreadyInCart) {
+      console.log(cart)
+      return
+    }
+
+    setCart((prev) => [...prev, { ...props, amount: 1 }])
+    return
   }
 
   return (
-    <CartContext.Provider value={{ cartOpen: cartOpen, handleCart }}>
+    <CartContext.Provider value={{ open, handleCart, cart, addToCart }}>
       {children}
     </CartContext.Provider>
   )
 }
+
+export const useCart = (): CartContext => useContext(CartContext)

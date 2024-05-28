@@ -3,7 +3,7 @@ import { ProductInfo } from '@/components/storefront/SingleProduct'
 import { fetchFromShopify, gql } from '@/utils/gql'
 import { Product } from '@/types'
 import Image from 'next/image'
-import { CustomerCartProvider } from '@/contexts/CustomerCartContext'
+import { CartContextProvider } from '@/contexts/CartContext'
 
 type SingleProductPageProps = {
   params: {
@@ -75,9 +75,9 @@ export default async function Page({ params }: SingleProductPageProps) {
             className="object-contain"
           />
         </div>
-        <CustomerCartProvider>
+        <CartContextProvider>
           <ProductInfo product={product} />
-        </CustomerCartProvider>
+        </CartContextProvider>
       </div>
     </div>
   )

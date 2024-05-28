@@ -35,7 +35,13 @@ export const NavLink = ({
   )
 }
 
-export const NavLinks = ({ links }: { links: TNavLink[] }) => (
+export const NavLinks = ({
+  links,
+  onClick,
+}: {
+  links: TNavLink[]
+  onClick?: () => void
+}) => (
   <>
     {links.map((link, index) => (
       <Fragment key={index}>
@@ -43,6 +49,7 @@ export const NavLinks = ({ links }: { links: TNavLink[] }) => (
           href={link.href}
           ariaLabel={'ariaLabel' in link ? link.ariaLabel : undefined}
           icon={'icon' in link ? link.icon : undefined}
+          onClick={onClick}
         >
           {'label' in link ? link.label : link.children}
         </NavLink>
