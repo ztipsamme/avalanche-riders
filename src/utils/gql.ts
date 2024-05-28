@@ -5,9 +5,9 @@ export const gql = String.raw
 export type Props = { query: string; variables?: any }
 
 export const client = createStorefrontApiClient({
-  storeDomain: 'http://emmas-examensarbete-2024-med-testdata.myshopify.com',
+  storeDomain: process.env.SHOPIFY_STORE!,
   apiVersion: '2024-04',
-  publicAccessToken: 'ab25b84f68d95c888ca64c98cb617f68',
+  publicAccessToken: process.env.SHOPIFY_HEADLESS_PUBLIC_ACCESS_TOKEN,
 })
 
 export const fetchFromShopify = async <T>({
