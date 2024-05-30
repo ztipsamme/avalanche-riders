@@ -17,6 +17,17 @@ export const getPrice = (product: ShopifyProduct | CartPrice) => {
   } else {
     var { amount, currencyCode } = product.price
   }
+  let currencySign
 
-  return `${amount} ${currencyCode}`
+  switch (currencyCode) {
+    case 'SEK':
+      currencySign = `${amount} kr`
+      break
+
+    default:
+      currencySign = `${amount} ${currencyCode}`
+      break
+  }
+
+  return currencySign
 }
