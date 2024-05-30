@@ -1,9 +1,6 @@
 'use client'
-import { addToCart } from '@/shopify/addToCart'
-import { createCart } from '@/shopify/createCart'
-import { loadCart } from '@/shopify/loadCart'
 import { Children } from '@/types'
-import { createContext, useContext, useState } from 'react'
+import { createContext, useState } from 'react'
 
 type CartContext = {
   open: boolean
@@ -27,13 +24,4 @@ export const CartContextProvider = ({ children }: Children) => {
       {children}
     </CartContext.Provider>
   )
-}
-
-export const useCart = () => {
-  return {
-    addToCart,
-    createCart,
-    loadCart,
-    ...useContext(CartContext),
-  }
 }

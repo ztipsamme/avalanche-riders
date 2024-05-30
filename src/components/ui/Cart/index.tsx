@@ -1,4 +1,3 @@
-import { useCart } from '@/contexts/CartContext'
 import { getPrice } from '@/utils/getPrice'
 import { getSingleProductUrl } from '@/utils/getSingleProductUrl'
 import { hasVariants } from '@/utils/hasVariants'
@@ -8,6 +7,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import CartLayout from './Layout'
+import { useCart } from '@/utils/useCart'
 
 export const localCartName = 'Cart'
 

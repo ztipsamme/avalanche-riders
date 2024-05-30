@@ -1,6 +1,5 @@
 'use client'
 
-import { useCart } from '@/contexts/CartContext'
 import { useMobileNav } from '@/contexts/MobileNavContext'
 import { Dialog, DialogPanel, PopoverGroup } from '@headlessui/react'
 import {
@@ -15,6 +14,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { NavLink, NavLinks } from './Links'
 import Cart from './Cart'
+import { useCart } from '@/utils/useCart'
 
 const iconStyle = 'h-5 w-5 flex-none'
 

@@ -1,6 +1,5 @@
 'use client'
 
-import { useCart } from '@/contexts/CartContext'
 import { Product, ShopifyProductVariant } from '@/types'
 import { classNames } from '@/utils/classNames'
 import { getPrice } from '@/utils/getPrice'
@@ -9,6 +8,7 @@ import { Label, Radio, RadioGroup } from '@headlessui/react'
 import Image from 'next/image'
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react'
 import { PrimaryButton } from '../ui/Button'
+import { useCart } from '@/utils/useCart'
 
 type VariantSelectorProps = {
   variants: ShopifyProductVariant[]
