@@ -19,7 +19,7 @@ type Cart = {
 }
 
 const Cart = () => {
-  const { toggleCart, createCart, loadCart } = useCart()
+  const { toggleCart, createCart, loadCart, removeFromCart } = useCart()
   const [cart, setCart] = useState<Cart>({
     id: '',
     checkoutUrl: '',
@@ -99,48 +99,54 @@ const Cart = () => {
                   const variant = cartItem.node.merchandise
                   const product = cartItem.node.merchandise.product
                   return (
-                    <li key={product.id} className="flex py-6">
-                      <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 relative">
-                        <Image
-                          src={product.featuredImage.url}
-                          alt={product.featuredImage.altText}
-                          className="h-full w-full object-cover object-center"
-                          fill
-                          sizes="(max-width: 100px) 100vw, 33vw"
-                        />
-                      </div>
-                      <div className="ml-4 flex flex-1 flex-col">
-                        <div>
-                          <div className="flex justify-between text-base font-medium text-gray-900">
-                            <h3>
-                              <a href={getSingleProductUrl(product)}>
-                                {product.title}
-                              </a>
-                            </h3>
-                            <p className="ml-4 whitespace-nowrap">
-                              {getPrice(variant)}
-                            </p>
-                          </div>
-                          {hasVariants(product) && (
-                            <p className="mt-1 text-sm text-gray-500">
-                              {variant.title}
-                            </p>
-                          )}
+                    <li key={product.id}>
+                      <a
+                        href={getSingleProductUrl(product)}
+                        className="flex py-6"
+                      >
+                        <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 relative">
+                          <Image
+                            src={product.featuredImage.url}
+                            alt={product.featuredImage.altText}
+                            className="h-full w-full object-cover object-center"
+                            fill
+                            sizes="(max-width: 100px) 100vw, 33vw"
+                          />
                         </div>
-                        <div className="flex flex-1 items-end justify-between text-sm">
-                          <p className="text-gray-500">
-                            Qty {cartItem.node.quantity}
-                          </p>
-                          <div className="flex">
-                            <button
-                              type="button"
-                              className="font-medium text-primary hover:text-primaryHover"
-                            >
-                              Remove
-                            </button>
+                        <div className="ml-4 flex flex-1 flex-col">
+                          <div>
+                            <div className="flex justify-between text-base font-medium text-gray-900">
+                              <h3>
+                                <a href={getSingleProductUrl(product)}>
+                                  {product.title}
+                                </a>
+                              </h3>
+                              <p className="ml-4 whitespace-nowrap">
+                                {getPrice(variant)}
+                              </p>
+                            </div>
+                            {hasVariants(product) && (
+                              <p className="mt-1 text-sm text-gray-500">
+                                {variant.title}
+                              </p>
+                            )}
+                          </div>
+                          <div className="flex flex-1 items-end justify-between text-sm">
+                            <p className="text-gray-500">
+                              Qty {cartItem.node.quantity}
+                            </p>
+                            <div className="flex">
+                              <button
+                                type="button"
+                                className="font-medium text-primary hover:text-primaryHover"
+                                onClick={() => removeFromCart(cartItem.node.id)}
+                              >
+                                Remove
+                              </button>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </a>
                     </li>
                   )
                 })}

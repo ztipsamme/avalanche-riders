@@ -9,6 +9,7 @@ export type Price = {
 
 export type Node = {
   node: {
+    id: string
     quantity: number
     cost: {
       subtotalAmount: {
@@ -22,6 +23,7 @@ export type Node = {
     }
     merchandise: {
       title: string
+      id: string
       product: {
         title: string
         featuredImage: Image
@@ -70,6 +72,7 @@ export const loadCart = async (): Promise<GetCart> => {
           lines(first: 100) {
             edges {
               node {
+                id
                 quantity
                 cost {
                   subtotalAmount {
@@ -86,6 +89,7 @@ export const loadCart = async (): Promise<GetCart> => {
                     title
                     product {
                       title
+                      id
                       featuredImage {
                         altText
                         url
