@@ -1,5 +1,5 @@
-import { fetchFromShopify, gql } from './gql'
-import { getCartId } from './getCartId'
+import { getCartId } from '@/utils/getCartId'
+import { fetchFromShopify, gql } from '@/utils/gql'
 
 export type GetCart = {
   cart: {

@@ -1,15 +1,15 @@
 import { useCart } from '@/contexts/CartContext'
-import { createCart } from '@/utils/createCart'
 import { getPrice } from '@/utils/getPrice'
 import { getSingleProductUrl } from '@/utils/getSingleProductUrl'
 import { hasVariants } from '@/utils/hasVariants'
-import { loadCart } from '@/utils/loadCart'
 import { DialogTitle } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import CartLayout from './Layout'
+import { loadCart } from '@/shopify/loadCart'
+import { createCart } from '@/shopify/createCart'
 
 export const localCartName = 'Cart'
 

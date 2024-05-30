@@ -1,4 +1,4 @@
-import { fetchFromShopify, gql } from './gql'
+import { fetchFromShopify, gql } from '@/utils/gql'
 
 export const createCart = async () => {
   const data = await fetchFromShopify<any>({
