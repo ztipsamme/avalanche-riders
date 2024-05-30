@@ -8,11 +8,11 @@ import {
 } from '@headlessui/react'
 
 const CartLayout = ({ children }: Children) => {
-  const { open, handleCart } = useCart()
+  const { open, toggleCart } = useCart()
 
   return (
     <Transition show={open}>
-      <Dialog className="relative z-10" onClose={handleCart}>
+      <Dialog className="relative z-10" onClose={toggleCart}>
         <TransitionChild
           enter="ease-in-out duration-500"
           enterFrom="opacity-0"

@@ -8,8 +8,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import CartLayout from './Layout'
-import { loadCart } from '@/shopify/loadCart'
-import { createCart } from '@/shopify/createCart'
 
 export const localCartName = 'Cart'
 
@@ -21,7 +19,7 @@ type Cart = {
 }
 
 export default function Cart() {
-  const { handleCart } = useCart()
+  const { toggleCart, createCart, loadCart } = useCart()
   const [cart, setCart] = useState<Cart>({
     id: '',
     checkoutUrl: '',
@@ -57,7 +55,7 @@ export default function Cart() {
     }
 
     getCart()
-  }, [])
+  }, [createCart, loadCart])
 
   const hasCartItems = (cart.lines ?? []).length >= 1
 
@@ -72,7 +70,7 @@ export default function Cart() {
             <button
               type="button"
               className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
-              onClick={handleCart}
+              onClick={toggleCart}
             >
               <span className="absolute -inset-0.5" />
               <span className="sr-only">Close panel</span>
@@ -86,7 +84,7 @@ export default function Cart() {
             <Link
               href={'/products'}
               className="font-medium text-primary hover:text-primaryHover"
-              onClick={handleCart}
+              onClick={toggleCart}
             >
               {`Let's browse`}
               <span aria-hidden="true"> &rarr;</span>
@@ -173,7 +171,7 @@ export default function Cart() {
             <button
               type="button"
               className="font-medium text-primary hover:text-primaryHover"
-              onClick={handleCart}
+              onClick={toggleCart}
             >
               Continue Shopping
               <span aria-hidden="true"> &rarr;</span>

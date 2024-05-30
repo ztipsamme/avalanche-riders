@@ -31,7 +31,7 @@ type link = {
   onClick?: () => void
 }
 
-const generateIconButtons = (handleCart: () => void) => [
+const generateIconButtons = (toggleCart: () => void) => [
   {
     label: 'Sök',
     href: '#',
@@ -46,7 +46,7 @@ const generateIconButtons = (handleCart: () => void) => [
     label: 'Varukorg',
     href: '#',
     icon: <ShoppingCartIcon className={iconStyle} aria-hidden="true" />,
-    onClick: handleCart,
+    onClick: toggleCart,
   },
   {
     label: 'Logga in',
@@ -78,10 +78,10 @@ const Logo = ({ handleNav }: { handleNav?: boolean }) => {
 }
 
 const DesktopNav = () => {
-  const { handleCart } = useCart()
+  const { toggleCart: toggleCart } = useCart()
   const { handleMobileNav } = useMobileNav()
 
-  const iconButtons = generateIconButtons(handleCart)
+  const iconButtons = generateIconButtons(toggleCart)
   return (
     <nav
       className="mx-auto flex max-w-8xl items-center justify-between p-6 lg:px-8"
@@ -121,8 +121,8 @@ const DesktopNav = () => {
 }
 
 const MobileNav = () => {
-  const { handleCart } = useCart()
-  const iconButtons = generateIconButtons(handleCart)
+  const { toggleCart: toggleCart } = useCart()
+  const iconButtons = generateIconButtons(toggleCart)
   const { mobileMenuOpen, handleMobileNav } = useMobileNav()
 
   const handleNav = (link: link) => {

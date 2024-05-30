@@ -1,5 +1,42 @@
+import { Image } from '@/types'
 import { getCartId } from '@/utils/getCartId'
 import { fetchFromShopify, gql } from '@/utils/gql'
+
+export type Price = {
+  amount: string
+  currencyCode: string
+}
+
+export type Node = {
+  node: {
+    quantity: number
+    cost: {
+      subtotalAmount: {
+        amount: string
+        currencyCode: string
+      }
+      totalAmount: {
+        amount: string
+        currencyCode: string
+      }
+    }
+    merchandise: {
+      title: string
+      product: {
+        title: string
+        featuredImage: Image
+        variants: {
+          nodes: [
+            {
+              id: string
+            },
+          ]
+        }
+      }
+      price: Price
+    }
+  }
+}
 
 export type GetCart = {
   cart: {
@@ -10,7 +47,7 @@ export type GetCart = {
       }
     }
     lines: {
-      edges: any[]
+      edges: Node[]
     }
   }
 } | null
