@@ -5,6 +5,7 @@ export const removeFromCart = async (lineId: string) => {
   const { cartId } = getCartId()
 
   if (!cartId) return null
+
   await fetchFromShopify({
     query: gql`
       mutation RemoveFromCart($cartId: ID!, $lineId: [ID!]!) {

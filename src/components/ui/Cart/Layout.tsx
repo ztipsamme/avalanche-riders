@@ -1,5 +1,5 @@
+import { useCart } from '@/contexts/CartContext'
 import { Children } from '@/types'
-import { useCart } from '@/utils/useCart'
 import {
   Dialog,
   DialogPanel,

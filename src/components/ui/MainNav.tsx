@@ -13,8 +13,8 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 import { NavLink, NavLinks } from './Links'
-import Cart from './Cart'
-import { useCart } from '@/utils/useCart'
+import { useCart } from '@/contexts/CartContext'
+import Cart from './Cart/Cart'
 
 const iconStyle = 'h-5 w-5 flex-none'
 

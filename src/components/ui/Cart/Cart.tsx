@@ -1,63 +1,20 @@
-import { getPrice } from '@/utils/getPrice'
-import { getSingleProductUrl } from '@/utils/getSingleProductUrl'
-import { hasVariants } from '@/utils/hasVariants'
+'use client'
+
 import { DialogTitle } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
 import CartLayout from './Layout'
-import { useCart } from '@/utils/useCart'
-
-export const localCartName = 'Cart'
-
-type Cart = {
-  id: ''
-  checkoutUrl: ''
-  estimatedCost?: { totalAmount: { amount: string } }
-  lines?: any[]
-}
+import { getSingleProductUrl } from '@/utils/getSingleProductUrl'
+import { getPrice } from '@/utils/getPrice'
+import { hasVariants } from '@/utils/hasVariants'
+import { useCart } from '@/contexts/CartContext'
+import { useEffect } from 'react'
 
 const Cart = () => {
-  const { toggleCart, createCart, loadCart, removeFromCart } = useCart()
-  const [cart, setCart] = useState<Cart>({
-    id: '',
-    checkoutUrl: '',
-    estimatedCost: undefined,
-    lines: undefined,
-  })
+  const { cart, toggleCart, removeFromCart } = useCart()
 
-  useEffect(() => {
-    async function getCart() {
-      let localCartData: any = window.localStorage.getItem(localCartName)
-
-      if (localCartData) {
-        const existingCartData = await loadCart()
-
-        setCart({
-          id: localCartData.id,
-          checkoutUrl: localCartData.checkoutUrl,
-          estimatedCost: existingCartData?.cart.cost,
-          lines: existingCartData?.cart.lines.edges,
-        })
-        return
-      }
-
-      localCartData = await createCart()
-
-      setCart((prev) => ({
-        ...prev,
-        id: localCartData.id,
-        checkoutUrl: localCartData.checkoutUrl,
-      }))
-
-      window.localStorage.setItem(localCartName, JSON.stringify(localCartData))
-    }
-
-    getCart()
-  }, [createCart, loadCart])
-
-  const hasCartItems = (cart.lines ?? []).length >= 1
+  const hasCartItems = (cart?.lines ?? []).length >= 1
 
   return (
     <CartLayout>
@@ -95,7 +52,7 @@ const Cart = () => {
           <div className="flow-root">
             <ul role="list" className="-my-6 divide-y divide-gray-200">
               {hasCartItems &&
-                cart.lines?.map((cartItem) => {
+                cart?.lines?.map((cartItem) => {
                   const variant = cartItem.node.merchandise
                   const product = cartItem.node.merchandise.product
                   return (

@@ -1,5 +1,6 @@
 'use client'
 
+import { useCart } from '@/contexts/CartContext'
 import { Product, ShopifyProductVariant } from '@/types'
 import { classNames } from '@/utils/classNames'
 import { getPrice } from '@/utils/getPrice'
@@ -8,7 +9,6 @@ import { Label, Radio, RadioGroup } from '@headlessui/react'
 import Image from 'next/image'
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react'
 import { PrimaryButton } from '../ui/Button'
-import { useCart } from '@/utils/useCart'
 
 type VariantSelectorProps = {
   variants: ShopifyProductVariant[]
@@ -104,13 +104,13 @@ export const VariantSelector = ({
 }
 
 export const ProductInfo = ({ product }: Product) => {
-  const { addToCart } = useCart()
+  const { addToCart, toggleCart } = useCart()
   const [selectedVariant, setSelectedVariant] =
     useState<ShopifyProductVariant | null>(null)
   const hasVariant = hasVariants(product)
   const [errorMessage, setErrorMessage] = useState(false)
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     if ((hasVariant && selectedVariant) || !hasVariant) {
@@ -118,17 +118,20 @@ export const ProductInfo = ({ product }: Product) => {
     }
 
     if (hasVariant && selectedVariant) {
-      addToCart(selectedVariant.id)
+      await addToCart(selectedVariant.id)
+
       return
     }
 
     if (!hasVariant) {
-      addToCart(product.variants.nodes[0].id)
+      await addToCart(product.variants.nodes[0].id)
+
       return
     }
 
     setErrorMessage(true)
   }
+
   return (
     <div>
       <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">

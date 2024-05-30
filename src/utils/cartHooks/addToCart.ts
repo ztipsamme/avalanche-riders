@@ -43,6 +43,4 @@ export const addToCart = async (variantId: string) => {
     `,
     variables: { cartId, variantId },
   })
-
-  loadCart()
 }

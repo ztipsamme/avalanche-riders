@@ -40,7 +40,7 @@ export type Node = {
   }
 }
 
-export type GetCart = {
+export type LoadCart = {
   cart: {
     checkoutUrl: string
     cost: {
@@ -54,7 +54,7 @@ export type GetCart = {
   }
 } | null
 
-export const loadCart = async (): Promise<GetCart> => {
+export const loadCart = async (): Promise<LoadCart> => {
   const { cartId } = getCartId()
 
   if (!cartId) return null
