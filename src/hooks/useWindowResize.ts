@@ -42,7 +42,7 @@ export const useWindowResize = () => {
     return () => {
       window.removeEventListener('resize', handleResize)
     }
-  }, [])
+  }, [tailwindBreakpoints])
 
   const getCurrentBreakpoint = (): string => {
     const tailwindBreakpoints: TailwindBreakpoints =
