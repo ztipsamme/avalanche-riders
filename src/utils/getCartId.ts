@@ -1,4 +1,4 @@
-import { localCartName } from '@/components/ui/Cart'
+import { localCartName } from '@/components/ui/Cart/Cart'
 
 export const getCartId = () => {
   const localCart = window.localStorage.getItem(localCartName)

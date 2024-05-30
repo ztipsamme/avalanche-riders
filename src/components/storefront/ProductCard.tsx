@@ -3,11 +3,7 @@ import Image from 'next/image'
 import { getPrice } from '@/utils/getPrice'
 import { getSingleProductUrl } from '@/utils/getSingleProductUrl'
 
-export default async function ProductCard({
-  product,
-}: {
-  product: ShopifyProduct
-}) {
+const ProductCard = async ({ product }: { product: ShopifyProduct }) => {
   const featuredImage = product.featuredImage
   const hasFeaturedImage = Boolean(featuredImage)
   const altText =
@@ -34,3 +30,5 @@ export default async function ProductCard({
     </a>
   )
 }
+
+export default ProductCard

@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import ProductCard from './ProductCard'
 import { fetchFromShopify, gql } from '@/utils/gql'
 import { Products, ShopifyProduct } from '@/types'
+import exp from 'constants'
 
 const query = gql`
   query ProductQuery($first: Int) {
@@ -30,13 +31,13 @@ const query = gql`
   }
 `
 
-export default async function ProductDisplay({
+const ProductDisplay = async ({
   first,
   title,
 }: {
   first?: number
   title: string
-}) {
+}) => {
   const { products } = await fetchFromShopify<Products>({
     query: query,
     variables: { first: first || 10 },
@@ -64,3 +65,5 @@ export default async function ProductDisplay({
     </div>
   )
 }
+
+export default ProductDisplay
