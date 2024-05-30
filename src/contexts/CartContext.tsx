@@ -1,52 +1,73 @@
 'use client'
+import { Children, Product } from '@/types'
+import { getCartId } from '@/utils/getCartId'
+import { fetchFromShopify, gql } from '@/utils/gql'
 import { createContext, useContext, useState } from 'react'
-import { Children, ShopifyProduct, ShopifyProductVariant } from '@/types'
-
-type Cart = (CartProduct & { amount: number })[]
 
 type CartContext = {
   open: boolean
-  cart: Cart
   handleCart: () => void
-  addToCart: (product: CartProduct) => void
-}
-
-type CartProduct = {
-  product: ShopifyProduct
-  variant?: ShopifyProductVariant
+  addToCart: (variantId: string) => void
 }
 
 export const CartContext = createContext<CartContext>({
   open: false,
-  cart: [],
   handleCart: () => {},
   addToCart: () => {},
 })
 
 export const CartContextProvider = ({ children }: Children) => {
   const [open, setOpen] = useState(false)
-  const [cart, setCart] = useState<Cart>([])
 
   const handleCart = () => {
     setOpen((prev) => !prev)
   }
 
-  const addToCart = (props: CartProduct) => {
-    const itemAlreadyInCart = cart.find(
-      (cartObject) => cartObject.product?.id === props.product.id
-    )
+  const addToCart = async (variantId: string) => {
+    const { cartId } = getCartId()
 
-    if (itemAlreadyInCart) {
-      console.log(cart)
-      return
-    }
+    if (!cartId) return null
 
-    setCart((prev) => [...prev, { ...props, amount: 1 }])
-    return
+    await fetchFromShopify({
+      query: gql`
+        mutation AddToCart($cartId: ID!, $variantId: ID!) {
+          cartLinesAdd(
+            cartId: $cartId
+            lines: [{ quantity: 1, merchandiseId: $variantId }]
+          ) {
+            cart {
+              lines(first: 100) {
+                edges {
+                  node {
+                    id
+                    quantity
+                    merchandise {
+                      ... on ProductVariant {
+                        product {
+                          title
+                          id
+                          featuredImage {
+                            altText
+                            url
+                            width
+                            height
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: { cartId, variantId },
+    })
   }
 
   return (
-    <CartContext.Provider value={{ open, handleCart, cart, addToCart }}>
+    <CartContext.Provider value={{ open, handleCart, addToCart }}>
       {children}
     </CartContext.Provider>
   )

@@ -1,7 +1,7 @@
 'use client'
 
 import { useCart } from '@/contexts/CartContext'
-import { MobileNavContext, useMobileNav } from '@/contexts/MobileNavContext'
+import { useMobileNav } from '@/contexts/MobileNavContext'
 import { Dialog, DialogPanel, PopoverGroup } from '@headlessui/react'
 import {
   Bars3Icon,
@@ -13,10 +13,8 @@ import {
 } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useContext } from 'react'
-import Cart from './Cart'
 import { NavLink, NavLinks } from './Links'
-import { useDevice } from '@/contexts/ScreenSizeContext'
+import Cart from './Cart'
 
 const iconStyle = 'h-5 w-5 flex-none'
 

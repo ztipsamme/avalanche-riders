@@ -1,17 +1,21 @@
-import { fetchFromShopify } from './gql'
-const query = `mutation CreateCart {
-    cartCreate {
-      cart {
-        checkoutUrl
-        id
-      }
-    }
-  }`
+import { fetchFromShopify, gql } from './gql'
 
 export const createCart = async () => {
   const data = await fetchFromShopify<any>({
-    query: query,
+    query: gql`
+      mutation CreateCart {
+        cartCreate {
+          cart {
+            checkoutUrl
+            id
+          }
+        }
+      }
+    `,
   })
 
-  console.log(data)
+  return {
+    id: data.cartCreate.cart.id,
+    checkoutUrl: data.cartCreate.cart.checkoutUrl,
+  }
 }

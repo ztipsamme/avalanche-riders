@@ -1,14 +1,14 @@
 'use client'
 
+import { useCart } from '@/contexts/CartContext'
+import { Product, ShopifyProductVariant } from '@/types'
 import { classNames } from '@/utils/classNames'
 import { getPrice } from '@/utils/getPrice'
 import { hasVariants } from '@/utils/hasVariants'
-import { Product, ShopifyProductVariant } from '@/types'
 import { Label, Radio, RadioGroup } from '@headlessui/react'
 import Image from 'next/image'
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react'
 import { PrimaryButton } from '../ui/Button'
-import { useCart } from '@/contexts/CartContext'
 
 type VariantSelectorProps = {
   variants: ShopifyProductVariant[]
@@ -118,17 +118,12 @@ export const ProductInfo = ({ product }: Product) => {
     }
 
     if (hasVariant && selectedVariant) {
-      addToCart({
-        product: product,
-        variant: selectedVariant,
-      })
+      addToCart(selectedVariant.id)
       return
     }
 
     if (!hasVariant) {
-      addToCart({
-        product: product,
-      })
+      addToCart(product.variants.nodes[0].id)
       return
     }
 
