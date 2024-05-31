@@ -7,20 +7,16 @@ export type Price = {
   currencyCode: string
 }
 
+export type Cost = {
+  subtotalAmount: Price
+  totalAmount: Price
+}
+
 export type Node = {
   node: {
     id: string
     quantity: number
-    cost: {
-      subtotalAmount: {
-        amount: string
-        currencyCode: string
-      }
-      totalAmount: {
-        amount: string
-        currencyCode: string
-      }
-    }
+    cost: Cost
     merchandise: {
       title: string
       id: string
@@ -44,11 +40,7 @@ export type LoadCart = {
   cart: {
     id: string
     checkoutUrl: string
-    cost: {
-      totalAmount: {
-        amount: string
-      }
-    }
+    cost: Cost
     lines: {
       edges: Node[]
     }
@@ -66,8 +58,13 @@ export const loadCart = async (): Promise<LoadCart> => {
         cart(id: $cartId) {
           checkoutUrl
           cost {
+            subtotalAmount {
+              amount
+              currencyCode
+            }
             totalAmount {
               amount
+              currencyCode
             }
           }
           lines(first: 100) {

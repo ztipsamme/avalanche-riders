@@ -1,22 +1,15 @@
 import { ShopifyProduct } from '../types'
 
 type CartPrice = {
-  title: string
-  product: {
-    title: string
-  }
-  price: {
-    amount: string
-    currencyCode: string
-  }
+  amount: string
+  currencyCode: string
 }
 
-export const getPrice = (product: ShopifyProduct | CartPrice) => {
-  if ('priceRange' in product) {
-    var { amount, currencyCode } = product.priceRange.minVariantPrice
-  } else {
-    var { amount, currencyCode } = product.price
-  }
+export const getPrice = (price: CartPrice | undefined) => {
+  if (!price) return '—'
+
+  const { amount, currencyCode } = price
+
   let currencySign
 
   switch (currencyCode) {

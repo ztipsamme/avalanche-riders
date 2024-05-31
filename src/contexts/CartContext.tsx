@@ -2,7 +2,7 @@
 import { Children } from '@/types'
 import { addToCart as addToCartAction } from '@/utils/cartHooks/addToCart'
 import { getCart } from '@/utils/cartHooks/getCart'
-import { loadCart } from '@/utils/cartHooks/loadCart'
+import { Cost, loadCart } from '@/utils/cartHooks/loadCart'
 import { removeFromCart as removeFromCartAction } from '@/utils/cartHooks/removeFromCart'
 import { createContext, useCallback, useEffect, useState } from 'react'
 
@@ -17,7 +17,7 @@ type CartContextType = {
 export type Cart = {
   id: string
   checkoutUrl: string
-  estimatedCost?: { totalAmount: { amount: string } }
+  estimatedCost?: Cost
   lines?: any[]
 }
 
@@ -34,7 +34,16 @@ export const CartContextProvider = ({ children }: Children) => {
   const [cart, setCart] = useState<Cart>({
     id: '',
     checkoutUrl: '',
-    estimatedCost: { totalAmount: { amount: '' } },
+    estimatedCost: {
+      subtotalAmount: {
+        amount: '',
+        currencyCode: '',
+      },
+      totalAmount: {
+        amount: '',
+        currencyCode: '',
+      },
+    },
     lines: [],
   })
 

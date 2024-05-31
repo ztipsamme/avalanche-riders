@@ -58,7 +58,7 @@ export const ProductInfo = ({ product }: Product) => {
       </h1>
       <h2 className="sr-only">Product information</h2>
       <p className="mt-6 text-3xl tracking-tight text-gray-900">
-        {getPrice(product)}
+        {getPrice(product.priceRange.minVariantPrice)}
       </p>
       <div className="mt-6">
         <h3 className="sr-only">Description</h3>

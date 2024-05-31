@@ -3,16 +3,16 @@
 import { getPrice } from '@/utils/getPrice'
 import { getSingleProductUrl } from '@/utils/getSingleProductUrl'
 import { hasVariants } from '@/utils/hasVariants'
+import { useCart } from '@/utils/useCart'
 import { DialogTitle } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect } from 'react'
 import CartLayout from './Layout'
-import { useCart } from '@/utils/useCart'
 
 const Cart = () => {
   const { cart, toggleCart, removeFromCart } = useCart()
+  const totalAmount = cart?.estimatedCost?.totalAmount
 
   const hasCartItems = (cart?.lines ?? []).length >= 1
 
@@ -79,7 +79,7 @@ const Cart = () => {
                                 </a>
                               </h3>
                               <p className="ml-4 whitespace-nowrap">
-                                {getPrice(variant)}
+                                {getPrice(cartItem.node.cost.totalAmount)}
                               </p>
                             </div>
                             {hasVariants(product) && (
@@ -117,8 +117,8 @@ const Cart = () => {
 
       <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
         <div className="flex justify-between text-base font-medium text-gray-900">
-          <p>Subtotal</p>
-          <p>$262.00</p>
+          <p>Total</p>
+          <p>{getPrice(totalAmount)}</p>
         </div>
         <p className="mt-0.5 text-sm text-gray-500">
           Shipping and taxes calculated at checkout.
