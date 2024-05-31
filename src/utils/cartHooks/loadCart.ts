@@ -1,10 +1,4 @@
-import {
-  Image,
-  LoadNode,
-  Price,
-  ShopifyProduct,
-  SubAndTotalAmount,
-} from '@/types'
+import { LoadNode, SubAndTotalAmount } from '@/types'
 import { getCartId } from '@/utils/getCartId'
 import { fetchFromShopify, gql } from '@/utils/gql'
 
