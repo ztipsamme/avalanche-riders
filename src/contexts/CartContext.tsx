@@ -1,8 +1,8 @@
 'use client'
-import { Children } from '@/types'
+import { Children, SubAndTotalAmount } from '@/types'
 import { addToCart as addToCartAction } from '@/utils/cartHooks/addToCart'
 import { getCart } from '@/utils/cartHooks/getCart'
-import { Cost, loadCart } from '@/utils/cartHooks/loadCart'
+import { loadCart } from '@/utils/cartHooks/loadCart'
 import { removeFromCart as removeFromCartAction } from '@/utils/cartHooks/removeFromCart'
 import { createContext, useCallback, useEffect, useState } from 'react'
 
@@ -17,7 +17,7 @@ type CartContextType = {
 export type Cart = {
   id: string
   checkoutUrl: string
-  estimatedCost?: Cost
+  estimatedCost?: SubAndTotalAmount
   lines?: any[]
 }
 

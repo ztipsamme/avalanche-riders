@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react'
 import { Children } from '@/types'
 
-export type MobileNavContext = {
+type MobileNavContext = {
   mobileMenuOpen: boolean
   handleMobileNav: () => void
 }

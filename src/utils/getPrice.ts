@@ -1,11 +1,6 @@
-import { ShopifyProduct } from '../types'
+import { Price } from '../types'
 
-type CartPrice = {
-  amount: string
-  currencyCode: string
-}
-
-export const getPrice = (price: CartPrice | undefined) => {
+export const getPrice = (price: Price | undefined) => {
   if (!price) return '—'
 
   const { amount, currencyCode } = price

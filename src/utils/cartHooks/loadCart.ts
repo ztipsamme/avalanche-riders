@@ -1,48 +1,20 @@
-import { Image } from '@/types'
+import {
+  Image,
+  LoadNode,
+  Price,
+  ShopifyProduct,
+  SubAndTotalAmount,
+} from '@/types'
 import { getCartId } from '@/utils/getCartId'
 import { fetchFromShopify, gql } from '@/utils/gql'
-
-export type Price = {
-  amount: string
-  currencyCode: string
-}
-
-export type Cost = {
-  subtotalAmount: Price
-  totalAmount: Price
-}
-
-export type Node = {
-  node: {
-    id: string
-    quantity: number
-    cost: Cost
-    merchandise: {
-      title: string
-      id: string
-      product: {
-        title: string
-        featuredImage: Image
-        variants: {
-          nodes: [
-            {
-              id: string
-            },
-          ]
-        }
-      }
-      price: Price
-    }
-  }
-}
 
 export type LoadCart = {
   cart: {
     id: string
     checkoutUrl: string
-    cost: Cost
+    cost: SubAndTotalAmount
     lines: {
-      edges: Node[]
+      edges: LoadNode[]
     }
   }
 } | null

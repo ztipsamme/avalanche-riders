@@ -6,7 +6,7 @@ type Breakpoint = {
   [key in 'name' | 'size']: string
 }
 
-export type TailwindBreakpoints = {
+type TailwindBreakpoints = {
   [key: string]: string
 }
 
