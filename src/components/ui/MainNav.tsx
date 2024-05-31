@@ -1,6 +1,7 @@
 'use client'
 
 import { useMobileNav } from '@/contexts/MobileNavContext'
+import { useCart } from '@/utils/useCart'
 import { Dialog, DialogPanel, PopoverGroup } from '@headlessui/react'
 import {
   Bars3Icon,
@@ -12,9 +13,8 @@ import {
 } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
-import { NavLink, NavLinks } from './Links'
-import { useCart } from '@/contexts/CartContext'
 import Cart from './Cart/Cart'
+import { NavLink, NavLinks } from './Links'
 
 const iconStyle = 'h-5 w-5 flex-none'
 
@@ -31,7 +31,7 @@ type link = {
   onClick?: () => void
 }
 
-const generateIconButtons = (toggleCart: () => void) => [
+export const generateIconButtons = (toggleCart: () => void) => [
   {
     label: 'Sök',
     href: '#',
@@ -77,11 +77,11 @@ const Logo = ({ handleNav }: { handleNav?: boolean }) => {
   )
 }
 
-const DesktopNav = () => {
-  const { toggleCart: toggleCart } = useCart()
+export const DesktopNav = () => {
+  const { toggleCart } = useCart()
   const { handleMobileNav } = useMobileNav()
-
   const iconButtons = generateIconButtons(toggleCart)
+
   return (
     <nav
       className="mx-auto flex max-w-8xl items-center justify-between p-6 lg:px-8"
@@ -121,7 +121,7 @@ const DesktopNav = () => {
 }
 
 const MobileNav = () => {
-  const { toggleCart: toggleCart } = useCart()
+  const { toggleCart } = useCart()
   const iconButtons = generateIconButtons(toggleCart)
   const { mobileMenuOpen, handleMobileNav } = useMobileNav()
 
@@ -183,13 +183,13 @@ const MobileNav = () => {
 
 export const MainNav = () => {
   return (
-    <>
+    <div>
       <DesktopNav />
 
       <MobileNav />
 
       <Cart />
-    </>
+    </div>
   )
 }
 

@@ -42,6 +42,7 @@ export type Node = {
 
 export type LoadCart = {
   cart: {
+    id: string
     checkoutUrl: string
     cost: {
       totalAmount: {

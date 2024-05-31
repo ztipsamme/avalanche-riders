@@ -1,12 +1,6 @@
+import { Cart } from '@/contexts/CartContext'
 import { createCart } from './createCart'
 import { loadCart } from './loadCart'
-
-export type Cart = {
-  id: ''
-  checkoutUrl: ''
-  estimatedCost?: { totalAmount: { amount: string } }
-  lines?: any[]
-}
 
 export const localCartName = 'Cart'
 

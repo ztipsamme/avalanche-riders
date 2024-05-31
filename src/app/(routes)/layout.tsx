@@ -1,8 +1,9 @@
+import Banner from '@/components/ui/Banner'
+import Header from '@/components/ui/Header'
+import { CartContextProvider } from '@/contexts/CartContext'
+import '@/style/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import '@/style/globals.css'
-import Header from '@/components/ui/Header'
-import Banner from '@/components/ui/Banner'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,11 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="bg-white relative">
-          <Banner />
-          <Header />
-          {children}
-        </div>
+        <CartContextProvider>
+          <div className="bg-white relative">
+            <Banner />
+            <Header />
+            {children}
+          </div>
+        </CartContextProvider>
       </body>
     </html>
   )

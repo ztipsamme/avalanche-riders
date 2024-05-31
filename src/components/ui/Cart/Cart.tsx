@@ -1,15 +1,15 @@
 'use client'
 
+import { getPrice } from '@/utils/getPrice'
+import { getSingleProductUrl } from '@/utils/getSingleProductUrl'
+import { hasVariants } from '@/utils/hasVariants'
 import { DialogTitle } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
-import CartLayout from './Layout'
-import { getSingleProductUrl } from '@/utils/getSingleProductUrl'
-import { getPrice } from '@/utils/getPrice'
-import { hasVariants } from '@/utils/hasVariants'
-import { useCart } from '@/contexts/CartContext'
 import { useEffect } from 'react'
+import CartLayout from './Layout'
+import { useCart } from '@/utils/useCart'
 
 const Cart = () => {
   const { cart, toggleCart, removeFromCart } = useCart()
@@ -96,7 +96,10 @@ const Cart = () => {
                               <button
                                 type="button"
                                 className="font-medium text-primary hover:text-primaryHover"
-                                onClick={() => removeFromCart(cartItem.node.id)}
+                                onClick={(event) => {
+                                  event.preventDefault()
+                                  removeFromCart(cartItem.node.id)
+                                }}
                               >
                                 Remove
                               </button>

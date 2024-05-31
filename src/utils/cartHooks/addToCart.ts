@@ -1,6 +1,5 @@
 import { getCartId } from '@/utils/getCartId'
 import { fetchFromShopify, gql } from '@/utils/gql'
-import { loadCart } from './loadCart'
 
 export const addToCart = async (variantId: string) => {
   const { cartId } = getCartId()
