@@ -1,4 +1,3 @@
-import Banner from '@/components/ui/Banner'
 import Header from '@/components/ui/Header'
 import { CartContextProvider } from '@/contexts/CartContext'
 import '@/style/globals.css'
@@ -22,7 +21,6 @@ export default function RootLayout({
       <body className={inter.className}>
         <CartContextProvider>
           <div className="bg-white relative">
-            <Banner />
             <Header />
             {children}
           </div>

@@ -16,7 +16,7 @@ export const ShopifyImage = ({ image, ...restProps }: CartItemImageProps) => {
       className={`object-contain ${restProps.className}`}
       fill
       loading="lazy"
-      sizes={`(max-width: ${image.width}) 100vw, 33vw ${restProps.sizes}`}
+      sizes={`(max-width: ${image.width}) 100vw, 33vw`}
       {...restProps}
     />
   )
