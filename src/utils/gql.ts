@@ -1,55 +1,31 @@
+import { createStorefrontApiClient } from '@shopify/storefront-api-client'
+
 export const gql = String.raw
 
-const headers = {
-  'Content-Type': 'application/json',
-  'X-Shopify-Access-Token': process.env.ADMIN_API_ACCESS_TOKEN!,
-}
+type Props = { query: string; variables?: any }
 
-const checkRes = async (res: Response) => {
-  if (!res.ok) {
-    const text = await res.text()
-    throw new Error(`
-      Failed to fetch data
-      Status: ${res.status}
-      Response: ${text}
-    `)
-  }
-}
+const client = createStorefrontApiClient({
+  storeDomain: process.env.SHOPIFY_STORE!,
+  apiVersion: '2024-04',
+  publicAccessToken: process.env.SHOPIFY_HEADLESS_PUBLIC_ACCESS_TOKEN,
+})
 
-export const getProducts = async <T>(query: string): Promise<T> => {
-  const res = await fetch(process.env.GRAPHQL_API_URL!, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify({ query }),
-  })
-
-  checkRes(res)
-
-  const { data } = await res.json()
-
-  return data as T
-}
-
-type GetSingleProduct = { [key in 'query' | 'id']: string }
-
-export const getSingleProduct = async <T>({
+export const fetchFromShopify = async <T>({
   query,
-  id,
-}: GetSingleProduct): Promise<T> => {
-  const res = await fetch(process.env.GRAPHQL_API_URL!, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify({
-      query: query,
-      variables: {
-        id: `gid://shopify/Product/${id}`,
-      },
-    }),
+  variables,
+}: Props): Promise<T> => {
+  const { data, errors } = await client.request(query, {
+    variables: variables,
   })
 
-  checkRes(res)
+  if (errors) {
+    console.error(errors)
+    throw new Error('Failed to fetch')
+  }
 
-  const { data } = await res.json()
+  if (!data) {
+    throw new Error('No data returned')
+  }
 
-  return data as T
+  return data
 }

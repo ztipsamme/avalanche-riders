@@ -4,7 +4,7 @@ type BreadcrumbsNav = { [key in 'label' | 'href']: string }
 
 export const BreadcrumbsNav = ({ label, href }: BreadcrumbsNav) => {
   const breadcrumbs = [
-    { label: 'Produkt', href: '/product' },
+    { label: 'Produkts', href: '/products' },
     { label: label, href: formatId(href) },
   ]
 

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { MouseEventHandler, ReactNode } from 'react'
 
 export type Children = { children: ReactNode }
 
@@ -9,22 +9,12 @@ export type IconType = React.ForwardRefExoticComponent<
   } & React.RefAttributes<SVGSVGElement>
 >
 
-export type DropdownProduct = {
-  name: string
-  description: string
-  href: string
-  icon: IconType
-}
-
 export type TNavLink = Partial<Children> & {
   label?: string
   href: string
   icon?: ReactNode
   ariaLabel?: string
-}
-
-export type DropDownItem<T> = {
-  item: T
+  onClick?: MouseEventHandler<HTMLAnchorElement>
 }
 
 export type ShopifyExtension = {
@@ -47,16 +37,36 @@ export type Image = {
   width: number
 }
 
+export type Price = {
+  amount: string
+  currencyCode: string
+}
+
+export type SubAndTotalAmount = {
+  subtotalAmount: Price
+  totalAmount: Price
+}
+
+export type LoadNode = {
+  node: {
+    id: string
+    quantity: number
+    cost: SubAndTotalAmount
+    merchandise: {
+      title: string
+      id: string
+      product: ShopifyProduct & { price: Price }
+    }
+  }
+}
+
 export type ShopifyProduct = {
   description: string
   featuredImage: Image
   handle: string
   id: string
-  priceRangeV2: {
-    minVariantPrice: {
-      amount: string
-      currencyCode: string
-    }
+  priceRange: {
+    minVariantPrice: Price
   }
   tags: string[]
   title: string

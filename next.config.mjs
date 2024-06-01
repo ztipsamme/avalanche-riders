@@ -13,6 +13,11 @@ const nextConfig = {
     ],
   },
   reactStrictMode: true,
+  env: {
+    SHOPIFY_STORE: process.env.SHOPIFY_STORE,
+    SHOPIFY_HEADLESS_PUBLIC_ACCESS_TOKEN:
+      process.env.SHOPIFY_HEADLESS_PUBLIC_ACCESS_TOKEN,
+  },
 }
 
 export default nextConfig
