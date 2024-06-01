@@ -13,7 +13,7 @@ import {
 } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
-import Cart from './Cart/Cart'
+import CartDrawer from './Cart/CartDrawer'
 import { NavLink, NavLinks } from './Links'
 
 const iconStyle = 'h-5 w-5 flex-none'
@@ -188,7 +188,7 @@ export const MainNav = () => {
 
       <MobileNav />
 
-      <Cart />
+      <CartDrawer />
     </div>
   )
 }
