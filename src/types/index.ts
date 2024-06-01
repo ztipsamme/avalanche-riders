@@ -29,7 +29,7 @@ export type ShopifyExtension = {
   }
 }
 
-export type Image = {
+export type ShopifyImage = {
   altText: string
   height: number
   id: string
@@ -55,6 +55,7 @@ export type LoadNode = {
     merchandise: {
       title: string
       id: string
+      image: ShopifyImage
       product: ShopifyProduct & { price: Price }
     }
   }
@@ -62,7 +63,7 @@ export type LoadNode = {
 
 export type ShopifyProduct = {
   description: string
-  featuredImage: Image
+  featuredImage: ShopifyImage
   handle: string
   id: string
   priceRange: {
@@ -80,7 +81,7 @@ export type ShopifyProductVariant = {
   id: string
   title: string
   price: string
-  image?: Image
+  image?: ShopifyImage
 }
 
 export type Products = {

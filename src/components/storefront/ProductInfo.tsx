@@ -1,13 +1,14 @@
 'use client'
 
-import { Product, ShopifyProductVariant } from '@/types'
+import { Price, Product, ShopifyProductVariant } from '@/types'
 import { getPrice } from '@/utils/getPrice'
 import { hasVariants } from '@/utils/hasVariants'
 import { useCart } from '@/utils/useCart'
 import Image from 'next/image'
 import { useState } from 'react'
-import { PrimaryButton } from '../ui/Button'
+import { Button } from '../ui/Button'
 import { VariantSelector } from './VariantSelector'
+import { ShopifyImage } from '../ui/ShopifyImage'
 
 export const ProductImage = ({ product }: Product) => {
   return (
@@ -29,8 +30,9 @@ export const ProductInfo = ({ product }: Product) => {
   const { addToCart, toggleCart } = useCart()
   const [errorMessage, setErrorMessage] = useState(false)
   const [selectedVariant, setSelectedVariant] =
-    useState<ShopifyProductVariant | null>(null)
-
+    useState<ShopifyProductVariant | null>(product.variants.nodes[0])
+  const price: Price | string =
+    selectedVariant?.price || product.priceRange.minVariantPrice
   const handleSubmit = () => {
     if ((hasVariant && selectedVariant) || !hasVariant) {
       setErrorMessage(false)
@@ -52,41 +54,44 @@ export const ProductInfo = ({ product }: Product) => {
   }
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-        {product.title}
-      </h1>
-      <h2 className="sr-only">Product information</h2>
-      <p className="mt-6 text-3xl tracking-tight text-gray-900">
-        {getPrice(product.priceRange.minVariantPrice)}
-      </p>
-      <div className="mt-6">
-        <h3 className="sr-only">Description</h3>
-
-        <div className="space-y-6">
-          <p className="text-base text-gray-900">{product.description}</p>
-        </div>
+    <div className="mx-auto mt-6 max-w-2xl px-4 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
+      <div className="aspect-1 relative rounded-lg overflow-hidden">
+        <ShopifyImage image={selectedVariant?.image || product.featuredImage} />
       </div>
-      <form className="mt-6">
-        {hasVariants(product) && (
-          <VariantSelector
-            variants={product.variants?.nodes}
-            selectedVariant={selectedVariant}
-            setSelectedVariant={setSelectedVariant}
-          />
-        )}
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+          {product.title}
+        </h1>
+        <h2 className="sr-only">Product information</h2>
+        <p className="mt-6 text-3xl tracking-tight text-gray-900">
+          {getPrice(price)}
+        </p>
+        <div className="mt-6">
+          <h3 className="sr-only">Description</h3>
 
-        <div className="mt-4  max-w-80">
-          <div className="h-6">
-            {errorMessage && (
-              <p className="text-sm text-gray-500">No variant selected!</p>
-            )}
+          <div className="space-y-6">
+            <p className="text-base text-gray-900">{product.description}</p>
           </div>
-          <PrimaryButton props={{ onClick: handleSubmit }}>
-            Lägg till i varukorg
-          </PrimaryButton>
         </div>
-      </form>
+        <form className="mt-6">
+          {hasVariants(product) && (
+            <VariantSelector
+              variants={product.variants?.nodes}
+              selectedVariant={selectedVariant}
+              setSelectedVariant={setSelectedVariant}
+            />
+          )}
+
+          <div className="mt-4  max-w-80">
+            <div className="h-6">
+              {errorMessage && (
+                <p className="text-sm text-gray-500">No variant selected!</p>
+              )}
+            </div>
+            <Button onClick={handleSubmit}>Lägg till i varukorg</Button>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }

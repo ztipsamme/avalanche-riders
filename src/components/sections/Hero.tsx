@@ -1,17 +1,5 @@
-import { TNavLink } from '@/types'
 import Image from 'next/image'
-import Link from 'next/link'
-
-const PrimaryButton = ({ href, children }: TNavLink) => {
-  return (
-    <Link
-      href={href}
-      className="bg-orange-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 "
-    >
-      {children}
-    </Link>
-  )
-}
+import { Button } from '../ui/Button'
 
 const cms = {
   title: 'Erövra Backarna',
@@ -38,7 +26,9 @@ const Hero = () => {
         </h1>
         <p className="mt-6 text-lg leading-8">{cms.description}</p>
         <div className="mt-10 flex gap-x-6">
-          <PrimaryButton href="/products">Spana in brädorna</PrimaryButton>
+          <Button href="/products" color="red" className="max-w-xs">
+            Spana in brädorna
+          </Button>
         </div>
       </div>
     </div>
@@ -46,4 +36,3 @@ const Hero = () => {
 }
 
 export default Hero
-// bg-cyan-700

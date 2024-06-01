@@ -1,6 +1,6 @@
 import { LoadNode, SubAndTotalAmount } from '@/types'
-import { getCartId } from '@/utils/getCartId'
 import { fetchFromShopify, gql } from '@/utils/gql'
+import { getLocalStorage } from '../getLocalStorage'
 
 export type LoadCart = {
   cart: {
@@ -14,7 +14,7 @@ export type LoadCart = {
 } | null
 
 export const loadCart = async (): Promise<LoadCart> => {
-  const { cartId } = getCartId()
+  const { cartId } = getLocalStorage()
 
   if (!cartId) return null
 
@@ -51,6 +51,12 @@ export const loadCart = async (): Promise<LoadCart> => {
                 merchandise {
                   ... on ProductVariant {
                     title
+                    image {
+                      altText
+                      height
+                      url
+                      width
+                    }
                     product {
                       title
                       id

@@ -1,7 +1,7 @@
 import { Price } from '../types'
 
-export const getPrice = (price: Price | undefined) => {
-  if (!price) return '—'
+export const getPrice = (price: Price | string | undefined) => {
+  if (!price || typeof price === 'string') return '—'
 
   const { amount, currencyCode } = price
 

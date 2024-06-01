@@ -1,6 +1,6 @@
 import { localCartName } from './cartHooks/getCart'
 
-export const getCartId = () => {
+export const getLocalStorage = () => {
   const localCart = window.localStorage.getItem(localCartName)
 
   if (!localCart) {
@@ -8,5 +8,8 @@ export const getCartId = () => {
     return { cartId: null }
   }
 
-  return { cartId: JSON.parse(localCart).id }
+  return {
+    cartId: JSON.parse(localCart).id,
+    checkoutUrl: JSON.parse(localCart).checkoutUrl,
+  }
 }

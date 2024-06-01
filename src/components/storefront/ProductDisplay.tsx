@@ -2,7 +2,6 @@ import { Fragment } from 'react'
 import ProductCard from './ProductCard'
 import { fetchFromShopify, gql } from '@/utils/gql'
 import { Products, ShopifyProduct } from '@/types'
-import exp from 'constants'
 
 const query = gql`
   query ProductQuery($first: Int) {

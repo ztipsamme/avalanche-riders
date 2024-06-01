@@ -1,8 +1,8 @@
-import { getCartId } from '@/utils/getCartId'
 import { fetchFromShopify, gql } from '@/utils/gql'
+import { getLocalStorage } from '../getLocalStorage'
 
 export const removeFromCart = async (lineId: string) => {
-  const { cartId } = getCartId()
+  const { cartId } = getLocalStorage()
 
   if (!cartId) return null
 

@@ -68,7 +68,7 @@ const CartDrawer = () => {
         <p className="mt-0.5 text-sm text-gray-500">Totalsumma inkl. moms.</p>
         <div className="mt-6">
           <a
-            href="/cart"
+            href="#"
             className="flex items-center justify-center rounded-md border border-transparent bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-primaryHover"
           >
             Till varukorgen
