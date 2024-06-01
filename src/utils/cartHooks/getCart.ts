@@ -1,20 +1,24 @@
-import { Cart } from '@/contexts/CartContext'
+import { LoadCart } from '@/types'
 import { createCart } from './createCart'
 import { loadCart } from './loadCart'
 
 export const localCartName = 'Cart'
 
-export const getCart = async (prev: Cart) => {
+export const getCart = async (
+  prev: LoadCart['cart']
+): Promise<LoadCart['cart']> => {
   let localCartData: any = window.localStorage.getItem(localCartName)
 
   if (localCartData) {
     const existingCartData = await loadCart()
 
+    if (!existingCartData) {
+      console.log('Cart did not load.')
+      throw new Error('Cart did not load.')
+    }
+
     return {
-      id: localCartData.id,
-      checkoutUrl: localCartData.checkoutUrl,
-      estimatedCost: existingCartData?.cart.cost,
-      lines: existingCartData?.cart.lines.edges,
+      ...existingCartData.cart,
     }
   }
 

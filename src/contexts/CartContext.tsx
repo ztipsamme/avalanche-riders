@@ -1,5 +1,6 @@
 'use client'
-import { Children, SubAndTotalAmount } from '@/types'
+
+import { Children, LoadCart } from '@/types'
 import { addToCart as addToCartAction } from '@/utils/cartHooks/addToCart'
 import { getCart } from '@/utils/cartHooks/getCart'
 import { loadCart } from '@/utils/cartHooks/loadCart'
@@ -12,18 +13,29 @@ import { createContext, useCallback, useEffect, useState } from 'react'
 
 type CartContextType = {
   open: boolean
-  cart: Cart | null
+  cart: LoadCart['cart'] | null
   toggleCart: () => void
   addToCart: (variantId: string) => Promise<void>
   removeFromCart: (variantId: string) => Promise<void>
   updateQuantity: ({ lineId, quantity }: UpdateQuantity) => Promise<void>
 }
 
-export type Cart = {
-  id: string
-  checkoutUrl: string
-  estimatedCost?: SubAndTotalAmount
-  lines?: any[]
+const defaultCart: LoadCart['cart'] = {
+  id: '',
+  checkoutUrl: '',
+  cost: {
+    subtotalAmount: {
+      amount: '',
+      currencyCode: '',
+    },
+    totalAmount: {
+      amount: '',
+      currencyCode: '',
+    },
+  },
+  lines: {
+    edges: [],
+  },
 }
 
 export const CartContext = createContext<CartContextType>({
@@ -37,21 +49,7 @@ export const CartContext = createContext<CartContextType>({
 
 export const CartContextProvider = ({ children }: Children) => {
   const [open, setOpen] = useState(false)
-  const [cart, setCart] = useState<Cart>({
-    id: '',
-    checkoutUrl: '',
-    estimatedCost: {
-      subtotalAmount: {
-        amount: '',
-        currencyCode: '',
-      },
-      totalAmount: {
-        amount: '',
-        currencyCode: '',
-      },
-    },
-    lines: [],
-  })
+  const [cart, setCart] = useState<LoadCart['cart']>(defaultCart)
 
   const toggleCart = useCallback(() => {
     setOpen((prev) => !prev)
@@ -60,7 +58,6 @@ export const CartContextProvider = ({ children }: Children) => {
   useEffect(() => {
     const firstLoadCart = async () => {
       const initialCartData = await getCart(cart)
-
       if (initialCartData) {
         setCart(initialCartData)
       }
@@ -72,11 +69,7 @@ export const CartContextProvider = ({ children }: Children) => {
   const updateCart = async () => {
     const res = await loadCart()
     if (res) {
-      setCart((prevCart) => ({
-        ...prevCart!,
-        estimatedCost: res.cart.cost,
-        lines: res.cart.lines.edges,
-      }))
+      setCart(res.cart)
     }
   }
 

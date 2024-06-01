@@ -1,19 +1,8 @@
-import { LoadNode, SubAndTotalAmount } from '@/types'
+import { LoadCart, LoadNode, SubAndTotalAmount } from '@/types'
 import { fetchFromShopify, gql } from '@/utils/gql'
 import { getLocalStorage } from '../getLocalStorage'
 
-export type LoadCart = {
-  cart: {
-    id: string
-    checkoutUrl: string
-    cost: SubAndTotalAmount
-    lines: {
-      edges: LoadNode[]
-    }
-  }
-} | null
-
-export const loadCart = async (): Promise<LoadCart> => {
+export const loadCart = async (): Promise<LoadCart | null> => {
   const { cartId } = getLocalStorage()
 
   if (!cartId) return null

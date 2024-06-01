@@ -61,6 +61,17 @@ export type LoadNode = {
   }
 }
 
+export type LoadCart = {
+  cart: {
+    id: string
+    checkoutUrl: string
+    cost: SubAndTotalAmount
+    lines: {
+      edges: LoadNode[] | []
+    }
+  }
+}
+
 export type ShopifyProduct = {
   description: string
   featuredImage: ShopifyImage

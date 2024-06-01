@@ -1,27 +1,26 @@
+'use client'
 import { getPrice } from '@/utils/getPrice'
 import { getSingleProductUrl } from '@/utils/getSingleProductUrl'
+import { hasVariants } from '@/utils/hasVariants'
 import { useCart } from '@/utils/useCart'
+import Link from 'next/link'
 import { ShopifyImage } from '../ShopifyImage'
+import QuantitySelector from './QuantitySelector'
 
-const CartItem = () => {
-  const { cart } = useCart()
-  const { removeFromCart } = useCart()
-  const cartItems = cart?.lines.edges
-
-  const hasCartItems = (cartItems?.length ?? 0) >= 1
+export const CartItemsWithQuantitySelector = () => {
+  const { cart, removeFromCart, toggleCart } = useCart()
+  const cartItems = cart?.lines?.edges ?? []
+  const hasCartItems = cartItems.length > 0
 
   return (
-    <ul role="list" className="-my-6 divide-y divide-gray-200">
-      {hasCartItems &&
-        cartItems?.map((cartItem, index) => {
+    <ul role="list" className="-my-6 divide-y divide-gray-200 col-span-7">
+      {hasCartItems ? (
+        cartItems.map((cartItem, index) => {
           const variant = cartItem.node.merchandise
           const product = cartItem.node.merchandise.product
-          const isDefault = variant.title === 'Default Title'
-          const title = isDefault ? product.title : variant.title
-
           return (
             <li key={index}>
-              <a href={getSingleProductUrl(product)} className="flex py-6">
+              <div className="flex py-6">
                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 relative">
                   <ShopifyImage image={variant.image} />
                 </div>
@@ -29,17 +28,25 @@ const CartItem = () => {
                   <div>
                     <div className="flex justify-between text-base font-medium text-gray-900">
                       <h3>
-                        <a href={getSingleProductUrl(product)}>{title}</a>
+                        <a href={getSingleProductUrl(product)}>
+                          {product.title}
+                        </a>
                       </h3>
                       <p className="ml-4 whitespace-nowrap">
                         {getPrice(cartItem.node.cost.totalAmount)}
                       </p>
                     </div>
+                    {hasVariants(product) && (
+                      <p className="mt-1 text-sm text-gray-500">
+                        {variant.title}
+                      </p>
+                    )}
                   </div>
                   <div className="flex flex-1 items-end justify-between text-sm">
-                    <p className="text-gray-500">
-                      Antal: {cartItem.node.quantity}
-                    </p>
+                    <QuantitySelector
+                      current={cartItem.node.quantity}
+                      linedId={cartItem.node.id}
+                    />
                     <div className="flex">
                       <button
                         type="button"
@@ -54,12 +61,23 @@ const CartItem = () => {
                     </div>
                   </div>
                 </div>
-              </a>
+              </div>
             </li>
           )
-        })}
+        })
+      ) : (
+        <p className="mt-6 text-sm text-gray-500">
+          {`Din varukorg är tom. `}
+          <Link
+            href={'/products'}
+            className="font-medium text-primary hover:text-primaryHover"
+            onClick={toggleCart}
+          >
+            {`Spana in våra produkter`}
+            <span aria-hidden="true"> &rarr;</span>
+          </Link>
+        </p>
+      )}
     </ul>
   )
 }
-
-export default CartItem

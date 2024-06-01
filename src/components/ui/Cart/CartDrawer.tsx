@@ -11,9 +11,9 @@ import { Button } from '../Button'
 
 const CartDrawer = () => {
   const { cart, toggleCart } = useCart()
-  const totalAmount = cart?.estimatedCost?.totalAmount
+  const totalAmount = cart?.cost?.totalAmount
 
-  const hasCartItems = (cart?.lines ?? []).length >= 1
+  const hasCartItems = (cart?.lines.edges ?? []).length >= 1
 
   return (
     <CartLayout>
@@ -49,14 +49,7 @@ const CartDrawer = () => {
         )}
         <div className="mt-8">
           <div className="flow-root">
-            <ul role="list" className="-my-6 divide-y divide-gray-200">
-              {hasCartItems &&
-                cart?.lines?.map((cartItem, index) => (
-                  <li key={index}>
-                    <CartItem cartItem={cartItem} />
-                  </li>
-                ))}
-            </ul>
+            <CartItem />
           </div>
         </div>
       </div>
