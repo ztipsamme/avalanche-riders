@@ -7,6 +7,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import CartItem from './CartItem'
 import CartLayout from './Layout'
+import { Button } from '../Button'
 
 const CartDrawer = () => {
   const { cart, toggleCart } = useCart()
@@ -67,12 +68,9 @@ const CartDrawer = () => {
         </div>
         <p className="mt-0.5 text-sm text-gray-500">Totalsumma inkl. moms.</p>
         <div className="mt-6">
-          <a
-            href="#"
-            className="flex items-center justify-center rounded-md border border-transparent bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-primaryHover"
-          >
+          <Button href={'/cart'} link onClick={toggleCart}>
             Till varukorgen
-          </a>
+          </Button>
         </div>
         <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
           <p>

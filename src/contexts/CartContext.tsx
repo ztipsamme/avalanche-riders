@@ -4,6 +4,10 @@ import { addToCart as addToCartAction } from '@/utils/cartHooks/addToCart'
 import { getCart } from '@/utils/cartHooks/getCart'
 import { loadCart } from '@/utils/cartHooks/loadCart'
 import { removeFromCart as removeFromCartAction } from '@/utils/cartHooks/removeFromCart'
+import {
+  UpdateQuantity,
+  updateQuantity as updateQuantityAction,
+} from '@/utils/cartHooks/updateQuantity'
 import { createContext, useCallback, useEffect, useState } from 'react'
 
 type CartContextType = {
@@ -12,6 +16,7 @@ type CartContextType = {
   toggleCart: () => void
   addToCart: (variantId: string) => Promise<void>
   removeFromCart: (variantId: string) => Promise<void>
+  updateQuantity: ({ lineId, quantity }: UpdateQuantity) => Promise<void>
 }
 
 export type Cart = {
@@ -26,6 +31,7 @@ export const CartContext = createContext<CartContextType>({
   cart: null,
   toggleCart: () => {},
   addToCart: async () => {},
+  updateQuantity: async () => {},
   removeFromCart: async () => {},
 })
 
@@ -60,6 +66,7 @@ export const CartContextProvider = ({ children }: Children) => {
       }
     }
     firstLoadCart()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const updateCart = async () => {
@@ -78,6 +85,11 @@ export const CartContextProvider = ({ children }: Children) => {
     updateCart()
   }
 
+  const updateQuantity = async ({ lineId, quantity }: UpdateQuantity) => {
+    await updateQuantityAction({ lineId, quantity })
+    updateCart()
+  }
+
   const removeFromCart = async (id: string) => {
     await removeFromCartAction(id)
     updateCart()
@@ -90,6 +102,7 @@ export const CartContextProvider = ({ children }: Children) => {
         cart,
         toggleCart,
         addToCart,
+        updateQuantity,
         removeFromCart,
       }}
     >
