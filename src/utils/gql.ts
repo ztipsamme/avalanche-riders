@@ -2,9 +2,9 @@ import { createStorefrontApiClient } from '@shopify/storefront-api-client'
 
 export const gql = String.raw
 
-export type Props = { query: string; variables?: any }
+type Props = { query: string; variables?: any }
 
-export const client = createStorefrontApiClient({
+const client = createStorefrontApiClient({
   storeDomain: process.env.SHOPIFY_STORE!,
   apiVersion: '2024-04',
   publicAccessToken: process.env.SHOPIFY_HEADLESS_PUBLIC_ACCESS_TOKEN,
