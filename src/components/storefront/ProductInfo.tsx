@@ -3,12 +3,12 @@
 import { Price, Product, ShopifyProductVariant } from '@/types'
 import { getPrice } from '@/utils/getPrice'
 import { hasVariants } from '@/utils/hasVariants'
-import { useCart } from '@/utils/useCart'
 import Image from 'next/image'
 import { useState } from 'react'
 import { Button } from '../ui/Button'
 import { VariantSelector } from './VariantSelector'
 import { ShopifyImage } from '../ui/ShopifyImage'
+import { useCart } from '@/hooks/useCart'
 
 export const ProductImage = ({ product }: Product) => {
   return (

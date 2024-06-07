@@ -1,7 +1,7 @@
 import { CartContext } from '@/contexts/CartContext'
+import { createCart } from '@/utils/cartHooks/createCart'
+import { loadCart } from '@/utils/cartHooks/loadCart'
 import { useContext } from 'react'
-import { createCart } from './cartHooks/createCart'
-import { loadCart } from './cartHooks/loadCart'
 
 export const useCart = () => {
   return {

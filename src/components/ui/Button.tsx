@@ -27,7 +27,7 @@ export const Button = ({
       buttonColor = blue
       break
     case 'red':
-      buttonColor = `bg-orange-600 hover:bg-orange-500 focus-ring-bg-orange-500 `
+      buttonColor = `bg-red hover:bg-redHover focus-ring-bg-redFocus `
       break
 
     default:
@@ -37,10 +37,10 @@ export const Button = ({
 
   const className = `flex w-full items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-white  focus:outline-none focus:ring-2  focus:ring-offset-2 ${buttonColor} ${restProps.className || ''}`
 
-  if (link && href) {
+  if (link) {
     return (
       <Link
-        href={href}
+        href={href ? href : '#'}
         {...(restProps as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
         className={className}
       >

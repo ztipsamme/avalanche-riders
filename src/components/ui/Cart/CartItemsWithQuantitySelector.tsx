@@ -2,10 +2,10 @@
 import { getPrice } from '@/utils/getPrice'
 import { getSingleProductUrl } from '@/utils/getSingleProductUrl'
 import { hasVariants } from '@/utils/hasVariants'
-import { useCart } from '@/utils/useCart'
 import Link from 'next/link'
 import { ShopifyImage } from '../ShopifyImage'
 import QuantitySelector from './QuantitySelector'
+import { useCart } from '@/hooks/useCart'
 
 export const CartItemsWithQuantitySelector = () => {
   const { cart, removeFromCart, toggleCart } = useCart()
@@ -28,9 +28,9 @@ export const CartItemsWithQuantitySelector = () => {
                   <div>
                     <div className="flex justify-between text-base font-medium text-gray-900">
                       <h3>
-                        <a href={getSingleProductUrl(product)}>
+                        <Link href={getSingleProductUrl(product)}>
                           {product.title}
-                        </a>
+                        </Link>
                       </h3>
                       <p className="ml-4 whitespace-nowrap">
                         {getPrice(cartItem.node.cost.totalAmount)}

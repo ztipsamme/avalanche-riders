@@ -1,19 +1,19 @@
 'use client'
 
 import { getPrice } from '@/utils/getPrice'
-import { useCart } from '@/utils/useCart'
 import { DialogTitle } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import CartItem from './CartItem'
 import CartLayout from './Layout'
 import { Button } from '../Button'
+import { useCart } from '@/hooks/useCart'
 
 const CartDrawer = () => {
   const { cart, toggleCart } = useCart()
   const totalAmount = cart?.cost?.totalAmount
 
-  const hasCartItems = (cart?.lines.edges ?? []).length >= 1
+  const hasCartItems = (cart?.lines?.edges ?? []).length >= 1
 
   return (
     <CartLayout>
@@ -36,13 +36,13 @@ const CartDrawer = () => {
         </div>
         {!hasCartItems && (
           <p className="mt-0.5 text-sm text-gray-500">
-            {`Your cart is currently empty. `}
+            {`Din varukorg är tom. `}
             <Link
               href={'/products'}
               className="font-medium text-primary hover:text-primaryHover"
               onClick={toggleCart}
             >
-              {`Let's browse`}
+              {`Spana in våra produkter`}
               <span aria-hidden="true"> &rarr;</span>
             </Link>
           </p>

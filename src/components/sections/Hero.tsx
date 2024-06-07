@@ -11,35 +11,39 @@ const cms = {
 
 export const Hero = () => {
   return (
-    <div className="bg-white h-[calc(100vh-122px)] relative overflow-hidden">
-      <ShopifyImage
-        className="scale-x-[-1] scale-[1.2] top-0 object-cover"
-        image={{
-          url: '/snowboard-images/pexels-lazarevkirill-8696256.jpg',
-          altText: '',
-          id: '',
-          width: 4000,
-          height: 4000,
-        }}
-      />
-      <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
-        <div className="relative isolate overflow-hidden px-6 pt-16 sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
-          <div className="max-w-md mx-0 flex-auto py-32 text-left">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              {cms.title}
-            </h2>
-            <p className="mt-6 text-lg leading-8 text-gray-300">
-              {cms.description}
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start ">
-              <Button
-                href="/products"
-                className="max-w-fit inline-flex  gap-x-1.5 "
-              >
-                {cms.cta}
-                <ArrowRightIcon className="-mr-1 h-5 w-5" aria-hidden="true" />
-              </Button>
-            </div>
+    <div className="bg-white h-[50vh] md:h-[calc(100vh-122px)] relative overflow-hidden">
+      <div className="relative h-full w-full bg-primary">
+        <div className={`absolute h-full w-full`}>
+          <ShopifyImage
+            className="scale-x-[-1] object-cover overflow-auto"
+            image={{
+              url: '/snowboard-images/pexels-limonovdigital-8766363.jpg',
+              altText: '',
+              id: '',
+              width: 2833,
+              height: 3541,
+            }}
+          />
+        </div>
+      </div>
+
+      {/* bg-gradient-to-b lg:bg-gradient-to-r from-primary/80 to-primary/10 backdrop-blur-sm shadow-md  */}
+      <div className="absolute inset-0 w-full h-full mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 flex items-center">
+        <div className="lg:max-w-[50%] flex-auto text-left text-white">
+          <h2 className="text-5xl sm:text-6xl font-bold tracking-tight lg:text-8xl ">
+            {cms.title}
+          </h2>
+          <p className="mt-6 text-base leading-8 ">{cms.description}</p>
+          <div className="mt-10 flex items-center gap-x-6 lg:justify-start ">
+            <Button
+              href="/products"
+              className="max-w-fit inline-flex  gap-x-1.5 text-sm"
+              color="red"
+              link
+            >
+              {cms.cta}
+              <ArrowRightIcon className="-mr-1 h-5 w-5" aria-hidden="true" />
+            </Button>
           </div>
         </div>
       </div>

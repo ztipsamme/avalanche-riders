@@ -3,42 +3,39 @@ import ProductCard from './ProductCard'
 import { fetchFromShopify, gql } from '@/utils/gql'
 import { Products, ShopifyProduct } from '@/types'
 
-const query = gql`
-  query ProductQuery($first: Int) {
-    products(first: $first) {
-      nodes {
-        description
-        featuredImage {
-          altText
-          height
-          id
-          url
-          width
-        }
-        handle
-        id
-        tags
-        title
-        priceRange {
-          minVariantPrice {
-            amount
-            currencyCode
+type Props = {
+  first?: number
+  title: string
+}
+
+const ProductDisplay = async ({ first, title }: Props) => {
+  const { products } = await fetchFromShopify<Products>({
+    query: gql`
+      query ProductQuery($first: Int) {
+        products(first: $first) {
+          nodes {
+            description
+            featuredImage {
+              altText
+              height
+              id
+              url
+              width
+            }
+            handle
+            id
+            tags
+            title
+            priceRange {
+              minVariantPrice {
+                amount
+                currencyCode
+              }
+            }
           }
         }
       }
-    }
-  }
-`
-
-const ProductDisplay = async ({
-  first,
-  title,
-}: {
-  first?: number
-  title: string
-}) => {
-  const { products } = await fetchFromShopify<Products>({
-    query: query,
+    `,
     variables: { first: first || 10 },
   })
 

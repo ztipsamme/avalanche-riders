@@ -1,5 +1,4 @@
-import Header from '@/components/ui/Header'
-import { CartContextProvider } from '@/contexts/CartContext'
+import { InnerLayout } from '@/components/ui/InnerLayout'
 import '@/style/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -19,12 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <CartContextProvider>
-          <div className="bg-white relative">
-            <Header />
-            {children}
-          </div>
-        </CartContextProvider>
+        <InnerLayout>{children}</InnerLayout>
       </body>
     </html>
   )

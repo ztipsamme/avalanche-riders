@@ -1,7 +1,6 @@
 'use client'
 
 import { useMobileNav } from '@/contexts/MobileNavContext'
-import { useCart } from '@/utils/useCart'
 import { Dialog, DialogPanel, PopoverGroup } from '@headlessui/react'
 import {
   Bars3Icon,
@@ -15,6 +14,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { NavLink, NavLinks } from './Links'
 import CartDrawer from './Cart/CartDrawer'
+import { useCart } from '@/hooks/useCart'
 
 const iconStyle = 'h-5 w-5 flex-none'
 
@@ -183,7 +183,7 @@ const MobileNav = () => {
 
 export const MainNav = () => {
   return (
-    <div>
+    <div className="bg-white">
       <DesktopNav />
 
       <MobileNav />

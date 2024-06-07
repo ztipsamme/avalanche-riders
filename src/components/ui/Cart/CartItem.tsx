@@ -1,12 +1,11 @@
 import { getPrice } from '@/utils/getPrice'
 import { getSingleProductUrl } from '@/utils/getSingleProductUrl'
-import { useCart } from '@/utils/useCart'
 import { ShopifyImage } from '../ShopifyImage'
+import { useCart } from '@/hooks/useCart'
 
 const CartItem = () => {
-  const { cart } = useCart()
-  const { removeFromCart } = useCart()
-  const cartItems = cart?.lines.edges
+  const { cart, removeFromCart } = useCart()
+  const cartItems = cart?.lines?.edges
 
   const hasCartItems = (cartItems?.length ?? 0) >= 1
 

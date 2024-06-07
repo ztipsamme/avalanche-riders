@@ -11,14 +11,15 @@ import {
 } from '@/utils/cartHooks/updateQuantity'
 import { createContext, useCallback, useEffect, useState } from 'react'
 
-type CartContextType = {
+type CartContext = {
   open: boolean
-  cart: LoadCart['cart'] | null
   toggleCart: () => void
-  addToCart: (variantId: string) => Promise<void>
-  removeFromCart: (variantId: string) => Promise<void>
   updateQuantity: ({ lineId, quantity }: UpdateQuantity) => Promise<void>
-}
+} & (LoadCart | { cart: null }) & {
+    [key in 'addToCart' | 'removeFromCart']: (
+      variantId: string
+    ) => Promise<void>
+  }
 
 const defaultCart: LoadCart['cart'] = {
   id: '',
@@ -38,7 +39,7 @@ const defaultCart: LoadCart['cart'] = {
   },
 }
 
-export const CartContext = createContext<CartContextType>({
+export const CartContext = createContext<CartContext>({
   open: false,
   cart: null,
   toggleCart: () => {},

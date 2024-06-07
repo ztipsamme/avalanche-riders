@@ -1,5 +1,5 @@
+import { useCart } from '@/hooks/useCart'
 import { classNames } from '@/utils/classNames'
-import { useCart } from '@/utils/useCart'
 import {
   Menu,
   MenuButton,
