@@ -65,7 +65,7 @@ export const CartContextProvider = ({ children }: Children) => {
     }
     firstLoadCart()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [cart])
 
   const updateCart = async () => {
     const res = await loadCart()
