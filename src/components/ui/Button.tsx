@@ -6,6 +6,7 @@ import { UrlObject } from 'url'
 type ButtonProps = {
   children: ReactNode
   link?: boolean
+  disabled?: boolean
   href?: string | UrlObject
   color?: 'blue' | 'red'
 } & (
@@ -16,6 +17,7 @@ type ButtonProps = {
 export const Button = ({
   children,
   link,
+  disabled,
   href,
   color,
   ...restProps
@@ -35,14 +37,26 @@ export const Button = ({
       break
   }
 
-  const className = `flex w-full items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-white  focus:outline-none focus:ring-2  focus:ring-offset-2 ${buttonColor} ${restProps.className || ''}`
+  const btnClasses = `flex w-full items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium text-white  focus:outline-none focus:ring-2  focus:ring-offset-2 ${buttonColor} ${restProps.className || ''}`
+
+  if (disabled) {
+    return (
+      <HeadlessButton
+        {...(restProps as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+        className={`${btnClasses} !bg-gray-200 !text-gray-600`}
+        disabled
+      >
+        {children}
+      </HeadlessButton>
+    )
+  }
 
   if (link) {
     return (
       <Link
         href={href ? href : '#'}
         {...(restProps as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
-        className={className}
+        className={btnClasses}
       >
         {children}
       </Link>
@@ -52,7 +66,7 @@ export const Button = ({
   return (
     <HeadlessButton
       {...(restProps as React.ButtonHTMLAttributes<HTMLButtonElement>)}
-      className={className}
+      className={btnClasses}
     >
       {children}
     </HeadlessButton>

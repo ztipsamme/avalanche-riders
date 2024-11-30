@@ -7,6 +7,8 @@ import { Button } from '../Button'
 
 export const OrderSummery = () => {
   const { cart } = useCart()
+  const cartItems = cart?.lines?.edges ?? []
+  const hasCartItems = cartItems.length > 0
   const { checkoutUrl } = getLocalStorage()
 
   const style = 'flex justify-between pt-4 mt-4'
@@ -36,7 +38,12 @@ export const OrderSummery = () => {
           <dd>{getPrice(cart?.cost?.totalAmount)}</dd>
         </div>
       </dl>
-      <Button className={`mt-6`} href={checkoutUrl} link>
+      <Button
+        className={`mt-6`}
+        href={checkoutUrl}
+        link
+        disabled={!hasCartItems}
+      >
         Till kassan
       </Button>
     </div>
